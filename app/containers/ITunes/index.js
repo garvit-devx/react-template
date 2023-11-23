@@ -11,6 +11,7 @@ import get from 'lodash/get';
 import isEmpty from 'lodash/isEmpty';
 import styled from '@emotion/styled';
 import { OutlinedInput, Button, Container } from '@mui/material';
+import { t } from '@lingui/macro';
 import T from '@components/T';
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
@@ -46,13 +47,14 @@ export function ITunes({ dispatchGetTracks, tracks, maxwidth }) {
 
   return (
     <PageContainer maxwidth={maxwidth}>
-      <T id={'iTunes Search'} />
-      <form onSubmit={handleOnSubmit}>
+      <T id="itunes_search" />
+      <form onSubmit={handleOnSubmit} data-testid="search-form">
         <OutlinedInput
-          placeholder="Search any track"
+          placeholder={t`Search any track`}
           sx={{ minWidth: '350px' }}
           onChange={(e) => setSearchText(e.target.value)}
           value={searchText}
+          inputProps={{ 'data-testid': 'search-input' }}
         />
         <Button variant="secondary" type="submit" sx={{ border: '1px solid black', margin: '0 0.5em' }}>
           Search
@@ -60,7 +62,9 @@ export function ITunes({ dispatchGetTracks, tracks, maxwidth }) {
       </form>
 
       <If condition={!isEmpty(allTracks) && totalResults > 0}>
-        <p style={{ margin: '2em 0' }}>Total Results: {totalResults}</p>
+        <p data-testid="total-results" style={{ margin: '2em 0' }}>
+          Total Results: {totalResults}
+        </p>
 
         <GridContainer>
           {allTracks.map((track) => (
