@@ -57,14 +57,12 @@ export function ITunes({ dispatchGetTracks, tracks, maxwidth }) {
           inputProps={{ 'data-testid': 'search-input' }}
         />
         <Button variant="secondary" type="submit" sx={{ border: '1px solid black', margin: '0 0.5em' }}>
-          Search
+          <T id="search" />
         </Button>
       </form>
 
       <If condition={!isEmpty(allTracks) && totalResults > 0}>
-        <p data-testid="total-results" style={{ margin: '2em 0' }}>
-          Total Results: {totalResults}
-        </p>
+        <T data-testid="total-results" id="total_results" values={{ totalResults }} style={{ margin: '1rem 0' }} />
 
         <GridContainer>
           {allTracks.map((track) => (

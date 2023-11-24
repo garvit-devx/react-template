@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import Card from '@mui/material/Card';
 import Button from '@mui/material/Button';
 import styled from '@emotion/styled';
+import T from '@components/T/index';
 
 const CustomCard = styled(Card)`
   padding: 0.5rem;
