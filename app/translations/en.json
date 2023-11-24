@@ -14,5 +14,13 @@
   "search_query": "Search query: {repoName}",
   "something_went_wrong": "Sorry. Something went wrong! Please try again in sometime.",
   "stories": "Go to Storybook",
-  "wednesday_solutions": "Wednesday Solutions"
+  "wednesday_solutions": "Wednesday Solutions",
+  "itunes_search": "iTunes Search",
+  "itunes_search_placeholder": "Search any track",
+  "search": "search",
+  "total_results": "Total Results: {totalResults}",
+  "preview": "Preview",
+  "pause": "Pause",
+  "track_name": "{trackName}",
+  "track_artist": "Artist: {artistName}"
 }
