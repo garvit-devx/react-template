@@ -48,13 +48,12 @@ export function ITunes({ dispatchGetTracks, tracks, maxwidth }) {
   return (
     <PageContainer maxwidth={maxwidth}>
       <T id="itunes_search" />
-      <form onSubmit={handleOnSubmit} data-testid="search-form">
+      <form onSubmit={handleOnSubmit} role="form">
         <OutlinedInput
           placeholder={t`Search any track`}
           sx={{ minWidth: '350px' }}
           onChange={(e) => setSearchText(e.target.value)}
           value={searchText}
-          inputProps={{ 'data-testid': 'search-input' }}
         />
         <Button variant="secondary" type="submit" sx={{ border: '1px solid black', margin: '0 0.5em' }}>
           <T id="search" />

@@ -25,9 +25,9 @@ describe('<ITunes /> container tests', () => {
   it('should call dispatchGetTracks when search form is submitted', () => {
     const SEARCH_TERM = 'ignite';
 
-    const { getByTestId } = renderProvider(<ITunes dispatchGetTracks={submitSpy} />);
-    const searchInput = getByTestId('search-input');
-    const searchForm = getByTestId('search-form');
+    const { getByPlaceholderText, getByRole } = renderProvider(<ITunes dispatchGetTracks={submitSpy} />);
+    const searchInput = getByPlaceholderText('Search any track');
+    const searchForm = getByRole('form');
 
     fireEvent.change(searchInput, {
       target: { value: SEARCH_TERM }
@@ -38,7 +38,6 @@ describe('<ITunes /> container tests', () => {
   });
 
   it('should display correct number of results', () => {
-    const resultCount = 2;
     const results = [
       {
         trackName: 'ignite',
@@ -49,15 +48,15 @@ describe('<ITunes /> container tests', () => {
         artistName: 'The Chainsmokers'
       }
     ];
+    const resultCount = results.length;
 
-    const { getByTestId } = renderProvider(<ITunes dispatchGetTracks={submitSpy} tracks={{ resultCount, results }} />);
-    const totalResultsElement = getByTestId('total-results');
+    const { getByText } = renderProvider(<ITunes dispatchGetTracks={submitSpy} tracks={{ resultCount, results }} />);
+    const totalResultsElement = getByText(new RegExp('total result', 'i'));
 
     expect(totalResultsElement).toHaveTextContent(resultCount);
   });
 
   it('should render exact number of TrackCard components as in the API response', () => {
-    const resultCount = 2;
     const results = [
       {
         trackName: 'ignite',
@@ -68,10 +67,9 @@ describe('<ITunes /> container tests', () => {
         artistName: 'The Chainsmokers'
       }
     ];
+    const resultCount = results.length;
 
-    const { getAllByTestId } = renderProvider(
-      <ITunes dispatchGetTracks={submitSpy} tracks={{ resultCount, results }} />
-    );
-    expect(getAllByTestId('track-card').length).toBe(resultCount);
+    const { getAllByRole } = renderProvider(<ITunes dispatchGetTracks={submitSpy} tracks={{ resultCount, results }} />);
+    expect(getAllByRole('track-card').length).toBe(resultCount);
   });
 });

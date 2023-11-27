@@ -13,14 +13,13 @@ exports[`<ITunes /> container tests should render and match the snapshot 1`] = `
         iTunes Search
       </p>
       <form
-        data-testid="search-form"
+        role="form"
       >
         <div
           class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary css-djb9n3-MuiInputBase-root-MuiOutlinedInput-root"
         >
           <input
             class="MuiInputBase-input MuiOutlinedInput-input css-1t8l2tu-MuiInputBase-input-MuiOutlinedInput-input"
-            data-testid="search-input"
             placeholder="Search any track"
             type="text"
             value=""
@@ -45,7 +44,12 @@ exports[`<ITunes /> container tests should render and match the snapshot 1`] = `
           tabindex="0"
           type="submit"
         >
-          Search
+          <p
+            class="css-lh9t18 egtqi0h0"
+            data-testid="t"
+          >
+            search
+          </p>
           <span
             class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
           />

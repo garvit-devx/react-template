@@ -12,13 +12,13 @@ const trackDetails = {
 
 describe('Tests for TrackCard component', () => {
   it('should render the component with all the necessary elements', () => {
-    const { getByTestId } = renderProvider(<TrackCard trackDetails={trackDetails} />);
+    const { getByTestId, getByRole } = renderProvider(<TrackCard trackDetails={trackDetails} />);
 
     const trackName = getByTestId('track-name');
     const artistName = getByTestId('artist-name');
-    const trackImage = getByTestId('track-image');
+    const trackImage = getByRole('img');
     const previewBtn = getByTestId('preview-btn');
-    const audioElement = getByTestId('audio-element');
+    const audioElement = getByRole('audio');
 
     expect(trackImage).toBeInTheDocument();
     expect(trackName).toHaveTextContent(trackDetails.trackName);
@@ -45,9 +45,9 @@ describe('Tests for TrackCard component', () => {
   });
 
   it('should set button text back to "Preview" when audio preview ends', () => {
-    const { getByTestId } = renderProvider(<TrackCard trackDetails={trackDetails} />);
+    const { getByTestId, getByRole } = renderProvider(<TrackCard trackDetails={trackDetails} />);
     const previewBtn = getByTestId('preview-btn');
-    const audioElement = getByTestId('audio-element');
+    const audioElement = getByRole('audio');
 
     fireEvent(audioElement, new Event('ended'));
     expect(previewBtn).toHaveTextContent('Preview');
