@@ -61,7 +61,7 @@ export function ITunes({ dispatchGetTracks, tracks, maxwidth }) {
       </form>
 
       <If condition={!isEmpty(allTracks) && totalResults > 0}>
-        <T data-testid="total-results" id="total_results" values={{ totalResults }} style={{ margin: '1rem 0' }} />
+        <T id="total_results" values={{ totalResults }} style={{ margin: '1rem 0' }} />
 
         <GridContainer>
           {allTracks.map((track) => (

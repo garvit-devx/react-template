@@ -34,12 +34,7 @@ const AudioPlayer = ({ previewUrl }) => {
 
   return (
     <>
-      <Button
-        variant="secondary"
-        sx={{ border: '1px solid black', margin: '1rem 0' }}
-        onClick={handleOnClick}
-        data-testid="preview-btn"
-      >
+      <Button variant="secondary" sx={{ border: '1px solid black', margin: '1rem 0' }} onClick={handleOnClick}>
         {isPlaying ? <T id="pause" /> : <T id="preview" />}
       </Button>
       <audio ref={audioRef} src={previewUrl} onEnded={() => setIsPlaying(false)} role="audio" />
@@ -53,15 +48,10 @@ export default function TrackCard({ trackDetails }) {
       <Image src={trackDetails.artworkUrl100} alt={`${trackDetails.trackName} thumbnail`} height={350} width={350} />
       <T
         id="track_name"
-        data-testid="track-name"
         values={{ trackName: trackDetails.trackName || 'Track Name not available' }}
         style={{ fontWeight: 'bold', margin: '1rem 0' }}
       />
-      <T
-        id="track_artist"
-        data-testid="artist-name"
-        values={{ artistName: trackDetails.artistName || 'Artist name not available' }}
-      />
+      <T id="track_artist" values={{ artistName: trackDetails.artistName || 'Artist name not available' }} />
 
       <AudioPlayer previewUrl={trackDetails.previewUrl} />
     </CustomCard>
