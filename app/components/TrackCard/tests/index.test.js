@@ -12,12 +12,15 @@ const trackDetails = {
 
 describe('Tests for TrackCard component', () => {
   it('should render the component with all the necessary elements', () => {
-    const { getByTestId, getByRole } = renderProvider(<TrackCard trackDetails={trackDetails} />);
+    const { getByRole, getByText } = renderProvider(<TrackCard trackDetails={trackDetails} />);
+    const artistRegex = new RegExp('Alan Walker', 'i');
 
-    const trackName = getByTestId('track-name');
-    const artistName = getByTestId('artist-name');
+    const trackName = getByText('Ignite');
+    const artistName = getByText(artistRegex);
     const trackImage = getByRole('img');
-    const previewBtn = getByTestId('preview-btn');
+    const previewBtn = getByRole('button', {
+      value: { text: 'Preview' }
+    });
     const audioElement = getByRole('audio');
 
     expect(trackImage).toBeInTheDocument();
@@ -28,25 +31,37 @@ describe('Tests for TrackCard component', () => {
   });
 
   it('should display correct text in the preview/pause button', async () => {
+    let previewBtn;
+
     // Initial text should be 'Preview'
-    const { getByTestId } = renderProvider(<TrackCard trackDetails={trackDetails} />);
-    const previewBtn = getByTestId('preview-btn');
+    const { getByRole } = renderProvider(<TrackCard trackDetails={trackDetails} />);
+    previewBtn = getByRole('button', {
+      value: { text: 'Preview' }
+    });
     expect(previewBtn).toHaveTextContent('Preview');
 
     // Text should change to 'Pause' if button is clicked
     fireEvent.click(previewBtn);
     await timeout(100);
+    previewBtn = getByRole('button', {
+      value: { text: 'Pause' }
+    });
     expect(previewBtn).toHaveTextContent('Pause');
 
     // Text content should change back to 'Preview' if button is clicked again
     fireEvent.click(previewBtn);
     await timeout(100);
+    previewBtn = getByRole('button', {
+      value: { text: 'Preview' }
+    });
     expect(previewBtn).toHaveTextContent('Preview');
   });
 
   it('should set button text back to "Preview" when audio preview ends', () => {
-    const { getByTestId, getByRole } = renderProvider(<TrackCard trackDetails={trackDetails} />);
-    const previewBtn = getByTestId('preview-btn');
+    const { getByRole } = renderProvider(<TrackCard trackDetails={trackDetails} />);
+    const previewBtn = getByRole('button', {
+      value: { text: 'Preview' }
+    });
     const audioElement = getByRole('audio');
 
     fireEvent(audioElement, new Event('ended'));
