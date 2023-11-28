@@ -44,20 +44,22 @@ export default function TrackCard({ trackDetails, onToggle, isPlaying }) {
   };
 
   return (
-    <CustomCard>
-      <Image src={trackDetails.artworkUrl100} alt={`${trackDetails.trackName} thumbnail`} height={350} width={350} />
-      <T
-        id="track_name"
-        values={{ trackName: trackDetails.trackName }}
-        style={{ fontWeight: 'bold', margin: '1rem 0' }}
-      />
-      <T id="track_artist" values={{ artistName: trackDetails.artistName }} />
+    <>
+      <CustomCard role="track-card">
+        <Image src={trackDetails.artworkUrl100} alt={`${trackDetails.trackName} thumbnail`} height={350} width={350} />
+        <T
+          id="track_name"
+          values={{ trackName: trackDetails.trackName || 'Track Name not available' }}
+          style={{ fontWeight: 'bold', margin: '1rem 0' }}
+        />
+        <T id="track_artist" values={{ artistName: trackDetails.artistName || 'Artist name not available' }} />
 
-      <Button variant="secondary" sx={{ border: '1px solid black', margin: '1rem 0' }} onClick={handleOnClick}>
-        {play ? <T id="pause" /> : <T id="preview" />}
-      </Button>
-      <audio ref={audioRef} src={trackDetails.previewUrl} onEnded={() => setPlay(false)} />
-    </CustomCard>
+        <Button variant="secondary" sx={{ border: '1px solid black', margin: '1rem 0' }} onClick={handleOnClick}>
+          {play ? <T id="pause" /> : <T id="preview" />}
+        </Button>
+        <audio ref={audioRef} src={trackDetails.previewUrl} onEnded={() => setPlay(false)} role="audio" />
+      </CustomCard>
+    </>
   );
 }
 
