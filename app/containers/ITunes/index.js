@@ -37,7 +37,7 @@ const GridContainer = styled.div`
 
 export function ITunes({ dispatchGetTracks, tracks, maxwidth }) {
   const [searchText, setSearchText] = useState('');
-  const allTracks = get(tracks, 'results', []);
+  const allTracks = Object.values(get(tracks, 'results', {}));
   const totalResults = get(tracks, 'resultCount', 0);
 
   const handleOnSubmit = async (e) => {
@@ -80,7 +80,7 @@ ITunes.propTypes = {
   dispatchGetTracks: PropTypes.func,
   tracks: PropTypes.shape({
     resultCount: PropTypes.number,
-    results: PropTypes.array
+    results: PropTypes.object
   }),
   maxwidth: PropTypes.number
 };

@@ -4,7 +4,7 @@
  *
  */
 
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
@@ -14,16 +14,22 @@ import { useParams } from 'react-router-dom';
 import T from '@components/T';
 import TrackDetails from '@app/components/TrackDetails/index';
 import { selectResults, selectError } from './selectors';
+import { selectTracks } from '../ITunes/selectors';
 import saga from './saga';
 import { iTunesDeatailsCreators } from './reducer';
 
-export function ITunesDeatails({ results, dispatchGetTrackDetails, error }) {
+export function ITunesDeatails({ results, dispatchGetTrackDetails, error, tracks }) {
   const { trackId } = useParams();
-  const { artistName, artworkUrl100, previewUrl, trackName, trackTimeMillis } = results?.results[0];
+  const [trackDetails, setTrackDetails] = useState(null);
+  const { artistName, artworkUrl100, previewUrl, trackName, trackTimeMillis } = trackDetails || results.results[0];
 
   useEffect(() => {
-    dispatchGetTrackDetails(trackId);
-  }, []);
+    if (tracks.results.hasOwnProperty(trackId)) {
+      setTrackDetails(tracks.results[trackId]);
+    } else {
+      dispatchGetTrackDetails(trackId);
+    }
+  }, [trackId]);
 
   if (error !== null) {
     return (
@@ -40,12 +46,14 @@ export function ITunesDeatails({ results, dispatchGetTrackDetails, error }) {
 ITunesDeatails.propTypes = {
   results: PropTypes.object,
   dispatchGetTrackDetails: PropTypes.func,
-  error: PropTypes.object
+  error: PropTypes.object,
+  tracks: PropTypes.object
 };
 
 const mapStateToProps = createStructuredSelector({
   results: selectResults(),
-  error: selectError()
+  error: selectError(),
+  tracks: selectTracks()
 });
 
 function mapDispatchToProps(dispatch) {
