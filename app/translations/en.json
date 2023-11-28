@@ -16,5 +16,11 @@
   "stories": "Go to Storybook",
   "wednesday_solutions": "Wednesday Solutions",
   "itunes_search": "iTunes Search",
-  "itunes_search_placeholder": "Search any track"
+  "itunes_search_placeholder": "Search any track",
+  "track_name": "Track Name: {trackName}",
+  "track_artist": "Artist: {artistName}",
+  "track_time": "Track duration: {trackTimeInMinutes} minutes",
+  "pause": "Pause",
+  "play_preview": "Play Preview",
+  "track_details_error_msg": "Could not fetch details for this track"
 }

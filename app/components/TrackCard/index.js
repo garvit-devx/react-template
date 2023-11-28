@@ -1,4 +1,5 @@
 import React, { useRef, useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import Card from '@mui/material/Card';
 import Button from '@mui/material/Button';
@@ -47,6 +48,12 @@ const AudioPlayer = ({ previewUrl }) => {
 };
 
 export default function TrackCard({ trackDetails }) {
+  const history = useHistory();
+
+  const handleDetailsBtnClick = (trackId) => {
+    history.push(`/itunes/${trackId}`);
+  };
+
   return (
     <CustomCard data-testid="track-card">
       <Image
@@ -60,6 +67,14 @@ export default function TrackCard({ trackDetails }) {
       <p data-testid="artist-name">Artist: {trackDetails.artistName || 'Artist name not available'}</p>
 
       <AudioPlayer previewUrl={trackDetails.previewUrl} />
+      <Button
+        variant="secondary"
+        sx={{ border: '1px solid black', margin: '1rem' }}
+        data-testid="details-btn"
+        onClick={() => handleDetailsBtnClick(trackDetails.trackId)}
+      >
+        Details
+      </Button>
     </CustomCard>
   );
 }
@@ -70,6 +85,7 @@ AudioPlayer.propTypes = {
 
 TrackCard.propTypes = {
   trackDetails: PropTypes.shape({
+    trackId: PropTypes.number,
     trackName: PropTypes.string,
     artistName: PropTypes.string,
     artworkUrl100: PropTypes.string,
