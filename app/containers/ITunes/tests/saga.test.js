@@ -22,14 +22,17 @@ describe('ITunes saga tests', () => {
     expect(response).toEqual(call(getTracks, searchTerm));
 
     const apiResponse = {
-      resultsCount: 1,
-      results: [{ trackName: 'ignite' }]
+      resultCount: 1,
+      results: [{ trackId: 12345, trackName: 'ignite' }]
     };
 
     expect(getAllTracksGenerator.next(apiResponseGenerator(true, apiResponse)).value).toEqual(
       put({
         type: iTunesTypes.SUCCESS_GET_TRACKS,
-        tracks: apiResponse
+        tracks: {
+          ...apiResponse,
+          results: { 12345: { trackId: 12345, trackName: 'ignite' } }
+        }
       })
     );
   });

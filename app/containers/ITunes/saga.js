@@ -10,7 +10,11 @@ export function* getAllTracks(action) {
     const response = yield call(getTracks, action.searchTerm);
     const { data, ok } = response;
     if (ok) {
-      yield put(successGetTracks(data));
+      const transformedResults = {};
+      data.results.forEach((item) => {
+        transformedResults[item.trackId] = item;
+      });
+      yield put(successGetTracks({ ...data, results: transformedResults }));
     } else {
       throw new Error(data);
     }
