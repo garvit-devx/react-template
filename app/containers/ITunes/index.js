@@ -37,12 +37,18 @@ const GridContainer = styled.div`
 
 export function ITunes({ dispatchGetTracks, tracks, maxwidth }) {
   const [searchText, setSearchText] = useState('');
+  const [currentAudioUrl, setCurrentAudioUrl] = useState(null);
+
   const allTracks = get(tracks, 'results', []);
   const totalResults = get(tracks, 'resultCount', 0);
 
   const handleOnSubmit = async (e) => {
     e.preventDefault();
     dispatchGetTracks(searchText);
+  };
+
+  const handleToggle = (audioUrl) => {
+    setCurrentAudioUrl(audioUrl);
   };
 
   return (
@@ -65,7 +71,12 @@ export function ITunes({ dispatchGetTracks, tracks, maxwidth }) {
 
         <GridContainer>
           {allTracks.map((track) => (
-            <TrackCard key={track.trackId} trackDetails={track} />
+            <TrackCard
+              key={track.trackId}
+              trackDetails={track}
+              onToggle={handleToggle}
+              isPlaying={currentAudioUrl === track.previewUrl}
+            />
           ))}
         </GridContainer>
       </If>

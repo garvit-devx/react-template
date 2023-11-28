@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import Card from '@mui/material/Card';
 import Button from '@mui/material/Button';
@@ -18,49 +18,50 @@ const Image = styled.img`
   object-fit: cover;
 `;
 
-const AudioPlayer = ({ previewUrl }) => {
+export default function TrackCard({ trackDetails, onToggle, isPlaying }) {
   const audioRef = useRef();
-  const [isPlaying, setIsPlaying] = useState(false);
+  const [play, setPlay] = useState(isPlaying);
+
+  useEffect(() => {
+    if (isPlaying) {
+      audioRef.current.play();
+      setPlay(true);
+    } else {
+      audioRef.current.pause();
+      setPlay(false);
+    }
+  }, [isPlaying]);
 
   const handleOnClick = () => {
-    if (isPlaying) {
+    onToggle(trackDetails.previewUrl);
+    if (play) {
       audioRef.current.pause();
+      setPlay(false);
     } else {
       audioRef.current.play();
+      setPlay(true);
     }
-
-    setIsPlaying((currentVal) => !currentVal);
   };
 
   return (
     <>
-      <Button variant="secondary" sx={{ border: '1px solid black', margin: '1rem 0' }} onClick={handleOnClick}>
-        {isPlaying ? <T id="pause" /> : <T id="preview" />}
-      </Button>
-      <audio ref={audioRef} src={previewUrl} onEnded={() => setIsPlaying(false)} role="audio" />
+      <CustomCard role="track-card">
+        <Image src={trackDetails.artworkUrl100} alt={`${trackDetails.trackName} thumbnail`} height={350} width={350} />
+        <T
+          id="track_name"
+          values={{ trackName: trackDetails.trackName || 'Track Name not available' }}
+          style={{ fontWeight: 'bold', margin: '1rem 0' }}
+        />
+        <T id="track_artist" values={{ artistName: trackDetails.artistName || 'Artist name not available' }} />
+
+        <Button variant="secondary" sx={{ border: '1px solid black', margin: '1rem 0' }} onClick={handleOnClick}>
+          {play ? <T id="pause" /> : <T id="preview" />}
+        </Button>
+        <audio ref={audioRef} src={trackDetails.previewUrl} onEnded={() => setPlay(false)} role="audio" />
+      </CustomCard>
     </>
   );
-};
-
-export default function TrackCard({ trackDetails }) {
-  return (
-    <CustomCard role="track-card">
-      <Image src={trackDetails.artworkUrl100} alt={`${trackDetails.trackName} thumbnail`} height={350} width={350} />
-      <T
-        id="track_name"
-        values={{ trackName: trackDetails.trackName || 'Track Name not available' }}
-        style={{ fontWeight: 'bold', margin: '1rem 0' }}
-      />
-      <T id="track_artist" values={{ artistName: trackDetails.artistName || 'Artist name not available' }} />
-
-      <AudioPlayer previewUrl={trackDetails.previewUrl} />
-    </CustomCard>
-  );
 }
-
-AudioPlayer.propTypes = {
-  previewUrl: PropTypes.string
-};
 
 TrackCard.propTypes = {
   trackDetails: PropTypes.shape({
@@ -68,5 +69,7 @@ TrackCard.propTypes = {
     artistName: PropTypes.string,
     artworkUrl100: PropTypes.string,
     previewUrl: PropTypes.string
-  })
+  }),
+  onToggle: PropTypes.func,
+  isPlaying: PropTypes.bool
 };

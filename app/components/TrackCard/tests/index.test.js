@@ -32,9 +32,10 @@ describe('Tests for TrackCard component', () => {
 
   it('should display correct text in the preview/pause button', async () => {
     let previewBtn;
+    let onToggle = jest.fn();
 
     // Initial text should be 'Preview'
-    const { getByRole } = renderProvider(<TrackCard trackDetails={trackDetails} />);
+    const { getByRole } = renderProvider(<TrackCard trackDetails={trackDetails} onToggle={onToggle} />);
     previewBtn = getByRole('button', {
       value: { text: 'Preview' }
     });
