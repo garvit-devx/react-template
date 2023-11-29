@@ -1,9 +1,11 @@
-import { selectITunesDeatails, selectSomePayLoad } from '../selectors';
+import { selectITunesDeatails, selectResults, selectError } from '../selectors';
 
-describe.skip('ITunesDeatails selector tests', () => {
+describe('ITunesDetails selector tests', () => {
   const mockedState = {
     iTunesDeatails: {
-      somePayLoad: 'W.S'
+      trackId: '123456789',
+      results: { resultCount: 1, results: [{ trackName: 'test' }] },
+      error: { errorMessage: 'Invalid request' }
     }
   };
 
@@ -13,7 +15,12 @@ describe.skip('ITunesDeatails selector tests', () => {
   });
 
   it('should select the somePayLoad state', () => {
-    const somePayLoadSelector = selectSomePayLoad();
-    expect(somePayLoadSelector(mockedState)).toEqual(mockedState.iTunesDeatails.somePayLoad);
+    const resultsSelector = selectResults();
+    expect(resultsSelector(mockedState)).toEqual(mockedState.iTunesDeatails.results);
+  });
+
+  it('should select the error state', () => {
+    const errorSelector = selectError();
+    expect(errorSelector(mockedState)).toEqual(mockedState.iTunesDeatails.error);
   });
 });

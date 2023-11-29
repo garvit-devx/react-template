@@ -41,7 +41,7 @@ export function TrackDetails({ trackDetails }) {
   }
 
   return (
-    <TrackDetailsContainer>
+    <TrackDetailsContainer role="track-details">
       <div style={{ width: '300px' }}>
         <TrackImage src={artworkUrl100} alt={trackName} />
       </div>
@@ -59,7 +59,7 @@ export function TrackDetails({ trackDetails }) {
         >
           {isPlaying ? <T id="pause" /> : <T id="play_preview" />}
         </Button>
-        <audio src={previewUrl} ref={audioRef} onEnded={() => setIsPlaying(false)} />
+        <audio src={previewUrl} ref={audioRef} onEnded={() => setIsPlaying(false)} role="audio" />
       </div>
     </TrackDetailsContainer>
   );
