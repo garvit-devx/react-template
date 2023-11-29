@@ -21,16 +21,20 @@ import { iTunesDeatailsCreators } from './reducer';
 export function ITunesDeatails({ results, dispatchGetTrackDetails, error, tracks }) {
   const { trackId } = useParams();
   const [trackDetails, setTrackDetails] = useState(null);
-  const { artistName, artworkUrl100, previewUrl, trackName, trackTimeMillis } = trackDetails ? trackDetails : {};
+
+  const { artistName, artworkUrl100, previewUrl, trackName, trackTimeMillis } = trackDetails
+    ? trackDetails
+    : results
+    ? results.results[0]
+    : {};
 
   useEffect(() => {
     // fetching data from redux
-    if (tracks.results.hasOwnProperty(trackId)) {
+    if (tracks?.results.hasOwnProperty(trackId)) {
       setTrackDetails(tracks.results[trackId]);
     } else {
       // making dispatch action to get track details from api
       dispatchGetTrackDetails(trackId);
-      setTrackDetails(results?.results[0]);
     }
   }, [trackId]);
 
@@ -41,8 +45,6 @@ export function ITunesDeatails({ results, dispatchGetTrackDetails, error, tracks
       </div>
     );
   }
-
-  // Displaying track details if error is null
   return <TrackDetails trackDetails={{ artistName, artworkUrl100, previewUrl, trackName, trackTimeMillis }} />;
 }
 

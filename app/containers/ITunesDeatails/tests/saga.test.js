@@ -2,10 +2,11 @@
  * Test iTunesDeatails sagas
  */
 
-import { takeLatest, call } from 'redux-saga/effects';
+import { takeLatest, call, put } from 'redux-saga/effects';
+import { getTrackDetails } from '@app/services/itunesApi';
+import { apiResponseGenerator } from '@app/utils/testUtils';
 import iTunesDeatailsSaga, { getDetails } from '../saga';
 import { iTunesDeatailsTypes } from '../reducer';
-import { getTrackDetails } from '@app/services/itunesApi';
 
 describe('ITunesDeatails saga tests', () => {
   const generator = iTunesDeatailsSaga();
@@ -16,8 +17,42 @@ describe('ITunesDeatails saga tests', () => {
     expect(generator.next().value).toEqual(takeLatest(iTunesDeatailsTypes.GET_TRACK_DETAILS, getDetails));
   });
 
-  it('should dispatch GET_SUCCESS_TRACK_DETAILS action if API call succeeds', () => {
+  it('should dispatch SUCCESS_GET_TRACK_DETAILS and FAILURE_GET_TRACK_DETAILS actions if API call succeeds', () => {
     const res = getDetailsGenerator.next().value;
     expect(res).toEqual(call(getTrackDetails, trackId));
+
+    const apiResponse = {
+      resultCount: 1,
+      results: [{ trackId: 12345, trackName: 'ignite' }]
+    };
+
+    expect(getDetailsGenerator.next(apiResponseGenerator(true, apiResponse)).value).toEqual(
+      put({
+        type: iTunesDeatailsTypes.SUCCESS_GET_TRACK_DETAILS,
+        results: apiResponse
+      })
+    );
+
+    expect(getDetailsGenerator.next(apiResponseGenerator(true, null)).value).toEqual(
+      put({
+        type: iTunesDeatailsTypes.FAILURE_GET_TRACK_DETAILS,
+        error: null
+      })
+    );
+  });
+
+  it('should dispatch GET_FAILURE_TRACK_DETAILS action if API call fails', () => {
+    getDetailsGenerator = getDetails({ trackId });
+    const res = getDetailsGenerator.next().value;
+    expect(res).toEqual(call(getTrackDetails, trackId));
+
+    const errorMsg = new Error('Something went wrong');
+
+    expect(getDetailsGenerator.next(apiResponseGenerator(false, errorMsg)).value).toEqual(
+      put({
+        type: iTunesDeatailsTypes.FAILURE_GET_TRACK_DETAILS,
+        error: errorMsg
+      })
+    );
   });
 });
