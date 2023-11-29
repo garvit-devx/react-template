@@ -25,7 +25,7 @@ export function ITunesDeatails({ results, dispatchGetTrackDetails, error, tracks
 
   useEffect(() => {
     // fetching data from redux
-    if (tracks.results.hasOwnProperty(trackId)) {
+    if (tracks?.results.hasOwnProperty(trackId)) {
       setTrackDetails(tracks.results[trackId]);
     } else {
       // making dispatch action to get track details from api

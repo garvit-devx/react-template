@@ -22,5 +22,9 @@
   "track_time": "Track duration: {trackTimeInMinutes} minutes",
   "pause": "Pause",
   "play_preview": "Play Preview",
-  "track_details_error_msg": "Could not fetch details for this track"
+  "track_details_error_msg": "Could not fetch details for this track",
+  "search": "search",
+  "total_results": "Total Results: {totalResults}",
+  "preview": "Preview",
+  "track_name_detail": "{trackName}"
 }
