@@ -21,13 +21,16 @@ import { iTunesDeatailsCreators } from './reducer';
 export function ITunesDeatails({ results, dispatchGetTrackDetails, error, tracks }) {
   const { trackId } = useParams();
   const [trackDetails, setTrackDetails] = useState(null);
-  const { artistName, artworkUrl100, previewUrl, trackName, trackTimeMillis } = trackDetails || results.results[0];
+  const { artistName, artworkUrl100, previewUrl, trackName, trackTimeMillis } = trackDetails ? trackDetails : {};
 
   useEffect(() => {
+    // fetching data from redux
     if (tracks.results.hasOwnProperty(trackId)) {
       setTrackDetails(tracks.results[trackId]);
     } else {
+      // making dispatch action to get track details from api
       dispatchGetTrackDetails(trackId);
+      setTrackDetails(results?.results[0]);
     }
   }, [trackId]);
 

@@ -8,7 +8,7 @@ import { createActions } from 'reduxsauce';
 
 export const initialState = {
   trackId: null,
-  results: [],
+  results: null,
   error: null
 };
 
