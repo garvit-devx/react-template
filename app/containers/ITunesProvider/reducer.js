@@ -3,27 +3,6 @@
  * ITunesProvider reducer
  *
  */
-// import produce from 'immer'
-// import { createActions } from 'reduxsauce'
-
-// export const initialState = {
-//   somePayLoad: null
-// }
-
-// export const { Types: iTunesProviderTypes, Creators: iTunesProviderCreators } = createActions({
-//   defaultAction: ['somePayLoad']
-// })
-
-// export const iTunesProviderReducer = (state = initialState, action) =>
-//   produce(state, draft => {
-//     switch (action.type) {
-//       case iTunesProviderTypes.DEFAULT_ACTION:
-//         draft.somePayLoad = action.somePayLoad;
-//       default:
-//     }
-//   })
-
-// export default iTunesProviderReducer
 
 import produce from 'immer';
 import { createActions } from 'reduxsauce';

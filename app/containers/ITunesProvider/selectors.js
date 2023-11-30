@@ -1,17 +1,6 @@
-// import { createSelector } from 'reselect';
-// import { initialState } from './reducer';
-
 /**
  * Direct selector to the iTunesProvider state domain
  */
-
-// const selectITunesProviderDomain = state => state.iTunesProvider || initialState;
-
-// export const selectITunesProvider = () =>
-//   createSelector(selectITunesProviderDomain, substate => substate);
-
-// export const selectSomePayLoad = () =>
-//   createSelector(selectITunesProviderDomain, substate => substate.somePayLoad);
 
 import { createSelector } from 'reselect';
 import get from 'lodash/get';
