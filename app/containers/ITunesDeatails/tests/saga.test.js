@@ -6,7 +6,7 @@ import { takeLatest, call, put } from 'redux-saga/effects';
 import { getTrackDetails } from '@app/services/itunesApi';
 import { apiResponseGenerator } from '@app/utils/testUtils';
 import iTunesDeatailsSaga, { getDetails } from '../saga';
-import { iTunesDeatailsTypes } from '../reducer';
+import { iTunesDetailsTypes } from '../reducer';
 
 describe('ITunesDeatails saga tests', () => {
   const generator = iTunesDeatailsSaga();
@@ -14,7 +14,7 @@ describe('ITunesDeatails saga tests', () => {
   let getDetailsGenerator = getDetails({ trackId });
 
   it('should start task to watch for GET_TRACK_DETAILS action', () => {
-    expect(generator.next().value).toEqual(takeLatest(iTunesDeatailsTypes.GET_TRACK_DETAILS, getDetails));
+    expect(generator.next().value).toEqual(takeLatest(iTunesDetailsTypes.GET_TRACK_DETAILS, getDetails));
   });
 
   it('should dispatch SUCCESS_GET_TRACK_DETAILS and FAILURE_GET_TRACK_DETAILS actions if API call succeeds', () => {
@@ -28,14 +28,14 @@ describe('ITunesDeatails saga tests', () => {
 
     expect(getDetailsGenerator.next(apiResponseGenerator(true, apiResponse)).value).toEqual(
       put({
-        type: iTunesDeatailsTypes.SUCCESS_GET_TRACK_DETAILS,
+        type: iTunesDetailsTypes.SUCCESS_GET_TRACK_DETAILS,
         results: apiResponse
       })
     );
 
     expect(getDetailsGenerator.next(apiResponseGenerator(true, null)).value).toEqual(
       put({
-        type: iTunesDeatailsTypes.FAILURE_GET_TRACK_DETAILS,
+        type: iTunesDetailsTypes.FAILURE_GET_TRACK_DETAILS,
         error: null
       })
     );
@@ -50,7 +50,7 @@ describe('ITunesDeatails saga tests', () => {
 
     expect(getDetailsGenerator.next(apiResponseGenerator(false, errorMsg)).value).toEqual(
       put({
-        type: iTunesDeatailsTypes.FAILURE_GET_TRACK_DETAILS,
+        type: iTunesDetailsTypes.FAILURE_GET_TRACK_DETAILS,
         error: errorMsg
       })
     );

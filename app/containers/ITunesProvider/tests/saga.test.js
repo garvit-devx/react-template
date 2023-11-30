@@ -3,13 +3,13 @@
  */
 
 import { takeLatest } from 'redux-saga/effects';
-import iTunesProviderSaga, { defaultFunction } from '../saga';
+import iTunesProviderSaga, { getAllTracks } from '../saga';
 import { iTunesProviderTypes } from '../reducer';
 
-describe.skip('ITunesProvider saga tests', () => {
+describe('ITunesProvider saga tests', () => {
   const generator = iTunesProviderSaga();
 
-  it('should start task to watch for DEFAULT_ACTION action', () => {
-    expect(generator.next().value).toEqual(takeLatest(iTunesProviderTypes.DEFAULT_ACTION, defaultFunction));
+  it('should start task to watch for REQUEST_GET_TRACKS action', () => {
+    expect(generator.next().value).toEqual(takeLatest(iTunesProviderTypes.REQUEST_GET_TRACKS, getAllTracks));
   });
 });

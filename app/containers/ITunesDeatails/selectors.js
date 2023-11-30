@@ -12,6 +12,3 @@ export const selectITunesDetails = () => createSelector(selectITunesDetailsDomai
 export const selectResults = () => createSelector(selectITunesDetailsDomain, (substate) => substate.results);
 
 export const selectError = () => createSelector(selectITunesDetailsDomain, (substate) => substate.error);
-
-export const selectTrackById = (trackId) =>
-  createSelector(selectITunesDetailsDomain, (substate) => substate.results.results[trackId]);

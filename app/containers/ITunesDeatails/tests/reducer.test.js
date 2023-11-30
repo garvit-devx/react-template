@@ -1,15 +1,15 @@
-import { iTunesDeatailsReducer, iTunesDeatailsTypes, initialState } from '../reducer';
+import { iTunesDetailsReducer, iTunesDetailsTypes, initialState } from '../reducer';
 
 describe('ITunesDetails reducer tests', () => {
   it('should return the initial state by default', () => {
-    expect(iTunesDeatailsReducer(undefined, {})).toEqual(initialState);
+    expect(iTunesDetailsReducer(undefined, {})).toEqual(initialState);
   });
 
   it('should return the updated state when an action of type GET_TRACK_DETAILS is dispatched', () => {
     const expectedResult = { ...initialState, trackId: '12345' };
     expect(
-      iTunesDeatailsReducer(initialState, {
-        type: iTunesDeatailsTypes.GET_TRACK_DETAILS,
+      iTunesDetailsReducer(initialState, {
+        type: iTunesDetailsTypes.GET_TRACK_DETAILS,
         trackId: '12345'
       })
     ).toEqual(expectedResult);
@@ -19,8 +19,8 @@ describe('ITunesDetails reducer tests', () => {
     const expectedResult = { ...initialState, results: { resultCount: 1, results: [{ trackId: '12345' }] } };
 
     expect(
-      iTunesDeatailsReducer(initialState, {
-        type: iTunesDeatailsTypes.SUCCESS_GET_TRACK_DETAILS,
+      iTunesDetailsReducer(initialState, {
+        type: iTunesDetailsTypes.SUCCESS_GET_TRACK_DETAILS,
         results: { resultCount: 1, results: [{ trackId: '12345' }] }
       })
     ).toEqual(expectedResult);
@@ -30,8 +30,8 @@ describe('ITunesDetails reducer tests', () => {
     const expectedResult = { ...initialState, error: { errorMessage: 'Invalid request' } };
 
     expect(
-      iTunesDeatailsReducer(initialState, {
-        type: iTunesDeatailsTypes.FAILURE_GET_TRACK_DETAILS,
+      iTunesDetailsReducer(initialState, {
+        type: iTunesDetailsTypes.FAILURE_GET_TRACK_DETAILS,
         error: { errorMessage: 'Invalid request' }
       })
     ).toEqual(expectedResult);

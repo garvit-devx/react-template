@@ -1,6 +1,6 @@
 /**
  *
- * Tests for ITunesDeatails container
+ * Tests for ITunesDetails container
  *
  *
  */
@@ -9,9 +9,9 @@ import React from 'react';
 import { MemoryRouter, Route } from 'react-router-dom';
 // import { fireEvent } from '@testing-library/dom';
 import { renderProvider } from '@utils/testUtils';
-import { ITunesDeatailsTest as ITunesDeatails } from '../index';
+import { ITunesDetailsTest as ITunesDetails } from '../index';
 
-describe('<ITunesDeatails /> container tests', () => {
+describe('<ITunesDetails /> container tests', () => {
   // let submitSpy;
   let dispatchGetTrackDetailsSpy = jest.fn();
 
@@ -20,15 +20,18 @@ describe('<ITunesDeatails /> container tests', () => {
   });
 
   it('should render and match the snapshot', () => {
-    const { baseElement } = renderProvider(<ITunesDeatails dispatchGetTrackDetails={dispatchGetTrackDetailsSpy} />);
+    const { baseElement } = renderProvider(
+      <ITunesDetails dispatchGetTrackDetails={dispatchGetTrackDetailsSpy} match={{ params: { trackId: '12345' } }} />
+    );
     expect(baseElement).toMatchSnapshot();
   });
 
   it('should display error message if error state is not null', () => {
     const { getByText } = renderProvider(
-      <ITunesDeatails
+      <ITunesDetails
         dispatchGetTrackDetails={dispatchGetTrackDetailsSpy}
         error={{ errorMessage: 'Something went wrong' }}
+        match={{ params: { trackId: '12345' } }}
       />
     );
     const errorMsgElement = getByText(/could not fetch details/i);
@@ -53,7 +56,12 @@ describe('<ITunesDeatails /> container tests', () => {
     const { getByText, getByRole } = renderProvider(
       <MemoryRouter initialEntries={['/itunes/12345']}>
         <Route path="/itunes/:trackId">
-          <ITunesDeatails dispatchGetTrackDetails={dispatchGetTrackDetailsSpy} error={null} tracks={tracks} />
+          <ITunesDetails
+            dispatchGetTrackDetails={dispatchGetTrackDetailsSpy}
+            error={null}
+            tracks={tracks}
+            match={{ params: { trackId: '12345' } }}
+          />
         </Route>
       </MemoryRouter>
     );
@@ -71,7 +79,10 @@ describe('<ITunesDeatails /> container tests', () => {
     renderProvider(
       <MemoryRouter initialEntries={['/itunes/12345']}>
         <Route path="/itunes/:trackId">
-          <ITunesDeatails dispatchGetTrackDetails={dispatchGetTrackDetailsSpy} />
+          <ITunesDetails
+            dispatchGetTrackDetails={dispatchGetTrackDetailsSpy}
+            match={{ params: { trackId: '12345' } }}
+          />
         </Route>
       </MemoryRouter>
     );
