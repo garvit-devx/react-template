@@ -12,20 +12,20 @@ import { compose } from 'redux';
 import { injectSaga } from 'redux-injectors';
 import T from '@components/T';
 import TrackDetails from '@app/components/TrackDetails/index';
+import { selectTrackById } from '@app/containers/ITunesProvider/selectors';
 import { selectResults, selectError } from './selectors';
-import { selectTracks, selectTrackById } from '../ITunesProvider/selectors';
 import saga from './saga';
 import { iTunesDetailsCreators } from './reducer';
 
-export function ITunesDetails({ results, dispatchGetTrackDetails, error, tracks, match }) {
+export function ITunesDetails({ results, dispatchGetTrackDetails, error, trackById, match }) {
   const trackId = match.params.trackId;
   const [trackDetails, setTrackDetails] = useState(null);
-  const { artistName, artworkUrl100, previewUrl, trackName, trackTimeMillis } = trackDetails ? trackDetails : {};
+  const { artistName, artworkUrl100, previewUrl, trackName, trackTimeMillis } = trackDetails ? trackDetails : trackById;
 
   useEffect(() => {
     // fetching data from redux
-    if (tracks?.results.hasOwnProperty(trackId)) {
-      setTrackDetails(tracks.results[trackId]);
+    if (trackById.hasOwnProperty(trackId)) {
+      setTrackDetails(trackById[trackId]);
     } else {
       // making dispatch action to get track details from api
       dispatchGetTrackDetails(trackId);
@@ -49,7 +49,7 @@ ITunesDetails.propTypes = {
   results: PropTypes.object,
   dispatchGetTrackDetails: PropTypes.func,
   error: PropTypes.object,
-  tracks: PropTypes.object,
+  trackById: PropTypes.object,
   match: PropTypes.object
 };
 
@@ -57,7 +57,6 @@ const mapStateToProps = (state, ownProps) =>
   createStructuredSelector({
     results: selectResults(),
     error: selectError(),
-    tracks: selectTracks(),
     trackById: selectTrackById(ownProps.match.params.trackId)
   });
 

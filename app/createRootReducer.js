@@ -6,7 +6,7 @@ import { combineReducers } from 'redux';
 import languageProviderReducer from 'containers/LanguageProvider/reducer';
 import homeContainerReducer from 'containers/HomeContainer/reducer';
 import iTunesReducer from './containers/ITunesProvider/reducer';
-import iTunesDeatailsReducer from './containers/ITunesDeatails/reducer';
+import iTunesDeatailsReducer from './containers/ITunesDetails/reducer';
 
 /**
  * Merges the main reducer with the router state and dynamically injected reducers
