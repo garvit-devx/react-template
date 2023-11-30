@@ -51,12 +51,7 @@ export function TrackDetails({ trackDetails }) {
         <T id="track_artist" values={{ artistName }} />
         <T id="track_time" values={{ trackTimeInMinutes }} />
 
-        <Button
-          variant="secondary"
-          type="submit"
-          sx={{ border: '1px solid black', margin: '1rem 0' }}
-          onClick={handleOnClick}
-        >
+        <Button variant="secondary" sx={{ border: '1px solid black', margin: '1rem 0' }} onClick={handleOnClick}>
           {isPlaying ? <T id="pause" /> : <T id="play_preview" />}
         </Button>
         <audio src={previewUrl} ref={audioRef} onEnded={() => setIsPlaying(false)} />

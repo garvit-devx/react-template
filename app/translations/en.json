@@ -26,5 +26,6 @@
   "search": "search",
   "total_results": "Total Results: {totalResults}",
   "preview": "Preview",
-  "track_name_detail": "{trackName}"
+  "track_name_detail": "{trackName}",
+  "details": "Details"
 }

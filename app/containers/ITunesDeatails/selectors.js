@@ -5,10 +5,13 @@ import { initialState } from './reducer';
  * Direct selector to the iTunesDeatails state domain
  */
 
-const selectITunesDeatailsDomain = (state) => state.iTunesDeatails || initialState;
+const selectITunesDetailsDomain = (state) => state.iTunesDetails || initialState;
 
-export const selectITunesDeatails = () => createSelector(selectITunesDeatailsDomain, (substate) => substate);
+export const selectITunesDetails = () => createSelector(selectITunesDetailsDomain, (substate) => substate);
 
-export const selectResults = () => createSelector(selectITunesDeatailsDomain, (substate) => substate.results);
+export const selectResults = () => createSelector(selectITunesDetailsDomain, (substate) => substate.results);
 
-export const selectError = () => createSelector(selectITunesDeatailsDomain, (substate) => substate.error);
+export const selectError = () => createSelector(selectITunesDetailsDomain, (substate) => substate.error);
+
+export const selectTrackById = (trackId) =>
+  createSelector(selectITunesDetailsDomain, (substate) => substate.results.results[trackId]);

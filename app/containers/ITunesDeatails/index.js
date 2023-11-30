@@ -10,16 +10,15 @@ import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
 import { injectSaga } from 'redux-injectors';
-import { useParams } from 'react-router-dom';
 import T from '@components/T';
 import TrackDetails from '@app/components/TrackDetails/index';
 import { selectResults, selectError } from './selectors';
-import { selectTracks } from '../ITunes/selectors';
+import { selectTracks, selectTrackById } from '../ITunesProvider/selectors';
 import saga from './saga';
-import { iTunesDeatailsCreators } from './reducer';
+import { iTunesDetailsCreators } from './reducer';
 
-export function ITunesDeatails({ results, dispatchGetTrackDetails, error, tracks }) {
-  const { trackId } = useParams();
+export function ITunesDetails({ results, dispatchGetTrackDetails, error, tracks, match }) {
+  const trackId = match.params.trackId;
   const [trackDetails, setTrackDetails] = useState(null);
   const { artistName, artworkUrl100, previewUrl, trackName, trackTimeMillis } = trackDetails ? trackDetails : {};
 
@@ -46,21 +45,24 @@ export function ITunesDeatails({ results, dispatchGetTrackDetails, error, tracks
   return <TrackDetails trackDetails={{ artistName, artworkUrl100, previewUrl, trackName, trackTimeMillis }} />;
 }
 
-ITunesDeatails.propTypes = {
+ITunesDetails.propTypes = {
   results: PropTypes.object,
   dispatchGetTrackDetails: PropTypes.func,
   error: PropTypes.object,
-  tracks: PropTypes.object
+  tracks: PropTypes.object,
+  match: PropTypes.object
 };
 
-const mapStateToProps = createStructuredSelector({
-  results: selectResults(),
-  error: selectError(),
-  tracks: selectTracks()
-});
+const mapStateToProps = (state, ownProps) =>
+  createStructuredSelector({
+    results: selectResults(),
+    error: selectError(),
+    tracks: selectTracks(),
+    trackById: selectTrackById(ownProps.match.params.trackId)
+  });
 
 function mapDispatchToProps(dispatch) {
-  const { getTrackDetails } = iTunesDeatailsCreators;
+  const { getTrackDetails } = iTunesDetailsCreators;
   return {
     dispatchGetTrackDetails: (trackId) => dispatch(getTrackDetails(trackId))
   };
@@ -68,6 +70,6 @@ function mapDispatchToProps(dispatch) {
 
 const withConnect = connect(mapStateToProps, mapDispatchToProps);
 
-export default compose(withConnect, injectSaga({ key: 'iTunesDeatails', saga }))(ITunesDeatails);
+export default compose(withConnect, injectSaga({ key: 'iTunesDeatails', saga }))(ITunesDetails);
 
-export const ITunesDeatailsTest = compose()(ITunesDeatails);
+export const ITunesDetailsTest = compose()(ITunesDetails);

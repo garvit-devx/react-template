@@ -1,10 +1,10 @@
 import { takeLatest, call, put } from 'redux-saga/effects';
 import { getTrackDetails } from '@app/services/itunesApi';
-import { iTunesDeatailsTypes, iTunesDeatailsCreators } from './reducer';
+import { iTunesDetailsTypes, iTunesDetailsCreators } from './reducer';
 
 // Individual exports for testing
-const { GET_TRACK_DETAILS } = iTunesDeatailsTypes;
-const { successGetTrackDetails, failureGetTrackDetails } = iTunesDeatailsCreators;
+const { GET_TRACK_DETAILS } = iTunesDetailsTypes;
+const { successGetTrackDetails, failureGetTrackDetails } = iTunesDetailsCreators;
 
 export function* getDetails(action) {
   const response = yield call(getTrackDetails, action.trackId);
@@ -17,6 +17,6 @@ export function* getDetails(action) {
   }
 }
 
-export default function* iTunesDeatailsSaga() {
+export default function* iTunesDetailsSaga() {
   yield takeLatest(GET_TRACK_DETAILS, getDetails);
 }

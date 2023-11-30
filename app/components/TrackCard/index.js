@@ -69,7 +69,7 @@ export default function TrackCard({ trackDetails, onToggle, isPlaying }) {
           sx={{ border: '1px solid black', margin: '1rem' }}
           onClick={() => handleDetailsBtnClick(trackDetails.trackId)}
         >
-          Details
+          <T id="details" />
         </Button>
       </CustomCard>
     </>

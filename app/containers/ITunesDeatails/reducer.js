@@ -12,26 +12,26 @@ export const initialState = {
   error: null
 };
 
-export const { Types: iTunesDeatailsTypes, Creators: iTunesDeatailsCreators } = createActions({
+export const { Types: iTunesDetailsTypes, Creators: iTunesDetailsCreators } = createActions({
   getTrackDetails: ['trackId'],
   successGetTrackDetails: ['results'],
   failureGetTrackDetails: ['error']
 });
 
-export const iTunesDeatailsReducer = (state = initialState, action) => {
+export const iTunesDetailsReducer = (state = initialState, action) => {
   return produce(state, (draft) => {
     switch (action.type) {
-      case iTunesDeatailsTypes.GET_TRACK_DETAILS:
+      case iTunesDetailsTypes.GET_TRACK_DETAILS:
         draft.trackId = action.trackId;
         break;
-      case iTunesDeatailsTypes.SUCCESS_GET_TRACK_DETAILS:
+      case iTunesDetailsTypes.SUCCESS_GET_TRACK_DETAILS:
         draft.results = action.results;
         break;
-      case iTunesDeatailsTypes.FAILURE_GET_TRACK_DETAILS:
+      case iTunesDetailsTypes.FAILURE_GET_TRACK_DETAILS:
         draft.error = action.error;
         break;
     }
   });
 };
 
-export default iTunesDeatailsReducer;
+export default iTunesDetailsReducer;
