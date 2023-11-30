@@ -18,9 +18,9 @@ import { compose } from 'redux';
 import { injectSaga } from 'redux-injectors';
 import If from '@app/components/If/index';
 import TrackCard from '@app/components/TrackCard/index';
-import { selectError, selectTracks } from './selectors';
-import iTunesSaga from './saga';
-import { iTunesCreators } from './reducer';
+import { selectError, selectTracks } from '../ITunesProvider/selectors';
+import iTunesProviderSaga from '../ITunesProvider/saga';
+import { iTunesProviderCreators } from '../ITunesProvider/reducer';
 
 const PageContainer = styled(Container)`
   && {
@@ -37,6 +37,7 @@ const GridContainer = styled.div`
 
 export function ITunes({ dispatchGetTracks, tracks, maxwidth }) {
   const [searchText, setSearchText] = useState('');
+  const [currentAudioUrl, setCurrentAudioUrl] = useState(null);
   const allTracks = Object.values(get(tracks, 'results', {}));
   const totalResults = get(tracks, 'resultCount', 0);
 
@@ -45,30 +46,36 @@ export function ITunes({ dispatchGetTracks, tracks, maxwidth }) {
     dispatchGetTracks(searchText);
   };
 
+  const handleToggle = (audioUrl) => {
+    setCurrentAudioUrl(audioUrl);
+  };
+
   return (
     <PageContainer maxwidth={maxwidth}>
       <T id="itunes_search" />
-      <form onSubmit={handleOnSubmit} data-testid="search-form">
+      <form onSubmit={handleOnSubmit} role="form">
         <OutlinedInput
           placeholder={t`Search any track`}
           sx={{ minWidth: '350px' }}
           onChange={(e) => setSearchText(e.target.value)}
           value={searchText}
-          inputProps={{ 'data-testid': 'search-input' }}
         />
         <Button variant="secondary" type="submit" sx={{ border: '1px solid black', margin: '0 0.5em' }}>
-          Search
+          <T id="search" />
         </Button>
       </form>
 
       <If condition={!isEmpty(allTracks) && totalResults > 0}>
-        <p data-testid="total-results" style={{ margin: '2em 0' }}>
-          Total Results: {totalResults}
-        </p>
+        <T id="total_results" values={{ totalResults }} style={{ margin: '1rem 0' }} />
 
         <GridContainer>
           {allTracks.map((track) => (
-            <TrackCard key={track.trackId} trackDetails={track} />
+            <TrackCard
+              key={track.trackId}
+              trackDetails={track}
+              onToggle={handleToggle}
+              isPlaying={currentAudioUrl === track.previewUrl}
+            />
           ))}
         </GridContainer>
       </If>
@@ -91,7 +98,7 @@ const mapStateToProps = createStructuredSelector({
 });
 
 function mapDispatchToProps(dispatch) {
-  const { requestGetTracks } = iTunesCreators;
+  const { requestGetTracks } = iTunesProviderCreators;
   return {
     dispatchGetTracks: (searchTerm) => dispatch(requestGetTracks(searchTerm))
   };
@@ -99,6 +106,6 @@ function mapDispatchToProps(dispatch) {
 
 const withConnect = connect(mapStateToProps, mapDispatchToProps);
 
-export default compose(withConnect, injectSaga({ key: 'iTunes', saga: iTunesSaga }))(ITunes);
+export default compose(withConnect, injectSaga({ key: 'iTunes', saga: iTunesProviderSaga }))(ITunes);
 
 export const ITunesTest = compose()(ITunes);

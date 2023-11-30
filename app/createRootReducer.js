@@ -5,7 +5,7 @@
 import { combineReducers } from 'redux';
 import languageProviderReducer from 'containers/LanguageProvider/reducer';
 import homeContainerReducer from 'containers/HomeContainer/reducer';
-import iTunesReducer from './containers/ITunes/reducer';
+import iTunesReducer from './containers/ITunesProvider/reducer';
 import iTunesDeatailsReducer from './containers/ITunesDeatails/reducer';
 
 /**

@@ -12,44 +12,59 @@ const trackDetails = {
 
 describe('Tests for TrackCard component', () => {
   it('should render the component with all the necessary elements', () => {
-    const { getByTestId } = renderProvider(<TrackCard trackDetails={trackDetails} />);
+    const { getByRole, getByText } = renderProvider(<TrackCard trackDetails={trackDetails} />);
 
-    const trackName = getByTestId('track-name');
-    const artistName = getByTestId('artist-name');
-    const trackImage = getByTestId('track-image');
-    const previewBtn = getByTestId('preview-btn');
-    const audioElement = getByTestId('audio-element');
+    const trackName = getByText(/Ignite/i);
+    const artistName = getByText(/alan walker/i);
+    const trackImage = getByRole('img');
+    const previewBtn = getByRole('button', {
+      name: 'Preview'
+    });
+    const audioElement = getByRole('audio');
 
     expect(trackImage).toBeInTheDocument();
-    expect(trackName).toHaveTextContent(trackDetails.trackName);
-    expect(artistName).toHaveTextContent(trackDetails.artistName);
+    expect(trackName).toBeInTheDocument();
+    expect(artistName).toBeInTheDocument();
     expect(previewBtn).toBeInTheDocument();
     expect(audioElement).toBeInTheDocument();
   });
 
   it('should display correct text in the preview/pause button', async () => {
+    let previewBtn;
+    let onToggle = jest.fn();
+
     // Initial text should be 'Preview'
-    const { getByTestId } = renderProvider(<TrackCard trackDetails={trackDetails} />);
-    const previewBtn = getByTestId('preview-btn');
-    expect(previewBtn).toHaveTextContent('Preview');
+    const { getByRole } = renderProvider(<TrackCard trackDetails={trackDetails} onToggle={onToggle} />);
+    previewBtn = getByRole('button', {
+      name: 'Preview'
+    });
+    expect(previewBtn).toBeInTheDocument();
 
     // Text should change to 'Pause' if button is clicked
     fireEvent.click(previewBtn);
     await timeout(100);
-    expect(previewBtn).toHaveTextContent('Pause');
+    previewBtn = getByRole('button', {
+      name: 'Pause'
+    });
+    expect(previewBtn).toBeInTheDocument();
 
     // Text content should change back to 'Preview' if button is clicked again
     fireEvent.click(previewBtn);
     await timeout(100);
-    expect(previewBtn).toHaveTextContent('Preview');
+    previewBtn = getByRole('button', {
+      name: 'Preview'
+    });
+    expect(previewBtn).toBeInTheDocument();
   });
 
   it('should set button text back to "Preview" when audio preview ends', () => {
-    const { getByTestId } = renderProvider(<TrackCard trackDetails={trackDetails} />);
-    const previewBtn = getByTestId('preview-btn');
-    const audioElement = getByTestId('audio-element');
+    const { getByRole } = renderProvider(<TrackCard trackDetails={trackDetails} />);
+    const previewBtn = getByRole('button', {
+      name: 'Preview'
+    });
+    const audioElement = getByRole('audio');
 
     fireEvent(audioElement, new Event('ended'));
-    expect(previewBtn).toHaveTextContent('Preview');
+    expect(previewBtn).toBeInTheDocument();
   });
 });
