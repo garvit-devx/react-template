@@ -1,4 +1,5 @@
-import { selectITunes, selectError, selectTracks, selectTrackById } from '../selectors';
+import { selectITunesProviderDomain, selectITunes, selectError, selectTracks, selectTrackById } from '../selectors';
+import { initialState } from '../reducer';
 
 describe('ITunesProvider selector tests', () => {
   const mockedState = {
@@ -27,5 +28,10 @@ describe('ITunesProvider selector tests', () => {
   it('should select the track by id', () => {
     const trackByIdSelector = selectTrackById(12345);
     expect(trackByIdSelector(mockedState)).toEqual(mockedState.iTunes.tracks.results[12345]);
+  });
+
+  it('should return the global state', () => {
+    const selector = selectITunesProviderDomain(initialState);
+    expect(selector).toEqual(initialState);
   });
 });
