@@ -18,9 +18,9 @@ import { compose } from 'redux';
 import { injectSaga } from 'redux-injectors';
 import If from '@app/components/If/index';
 import TrackCard from '@app/components/TrackCard/index';
-import { selectError, selectTracks } from './selectors';
-import iTunesSaga from './saga';
-import { iTunesCreators } from './reducer';
+import { selectError, selectTracks } from '../ITunesProvider/selectors';
+import iTunesProviderSaga from '../ITunesProvider/saga';
+import { iTunesProviderCreators } from '../ITunesProvider/reducer';
 
 const PageContainer = styled(Container)`
   && {
@@ -98,7 +98,7 @@ const mapStateToProps = createStructuredSelector({
 });
 
 function mapDispatchToProps(dispatch) {
-  const { requestGetTracks } = iTunesCreators;
+  const { requestGetTracks } = iTunesProviderCreators;
   return {
     dispatchGetTracks: (searchTerm) => dispatch(requestGetTracks(searchTerm))
   };
@@ -106,6 +106,6 @@ function mapDispatchToProps(dispatch) {
 
 const withConnect = connect(mapStateToProps, mapDispatchToProps);
 
-export default compose(withConnect, injectSaga({ key: 'iTunes', saga: iTunesSaga }))(ITunes);
+export default compose(withConnect, injectSaga({ key: 'iTunes', saga: iTunesProviderSaga }))(ITunes);
 
 export const ITunesTest = compose()(ITunes);

@@ -1,9 +1,9 @@
 import { takeLatest, call, put } from 'redux-saga/effects';
-import { iTunesTypes, iTunesCreators } from './reducer';
+import { iTunesProviderTypes, iTunesProviderCreators } from './reducer';
 import { getTracks } from '@app/services/itunesApi';
 
-const { REQUEST_GET_TRACKS } = iTunesTypes;
-const { successGetTracks, failureGetTracks } = iTunesCreators;
+const { REQUEST_GET_TRACKS } = iTunesProviderTypes;
+const { successGetTracks, failureGetTracks } = iTunesProviderCreators;
 
 export function* getAllTracks(action) {
   try {
@@ -24,6 +24,6 @@ export function* getAllTracks(action) {
 }
 
 // Individual exports for testing
-export default function* iTunesSaga() {
+export default function* iTunesProviderSaga() {
   yield takeLatest(REQUEST_GET_TRACKS, getAllTracks);
 }
