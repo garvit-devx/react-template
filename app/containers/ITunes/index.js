@@ -18,9 +18,9 @@ import { compose } from 'redux';
 import { injectSaga } from 'redux-injectors';
 import If from '@app/components/If/index';
 import TrackCard from '@app/components/TrackCard/index';
-import { selectError, selectTracks } from '../ITunesProvider/selectors';
-import iTunesProviderSaga from '../ITunesProvider/saga';
-import { iTunesProviderCreators } from '../ITunesProvider/reducer';
+import { selectError, selectTracks } from '@app/containers/ITunesProvider/selectors';
+import iTunesProviderSaga from '@app/containers/ITunesProvider/saga';
+import { iTunesProviderCreators } from '@app/containers/ITunesProvider/reducer';
 
 const PageContainer = styled(Container)`
   && {
