@@ -13,13 +13,12 @@ const trackDetails = {
 describe('Tests for TrackCard component', () => {
   it('should render the component with all the necessary elements', () => {
     const { getByRole, getByText } = renderProvider(<TrackCard trackDetails={trackDetails} />);
-    const artistRegex = new RegExp('Alan Walker', 'i');
 
-    const trackName = getByText('Ignite');
-    const artistName = getByText(artistRegex);
+    const trackName = getByText(/Ignite/i);
+    const artistName = getByText(/alan walker/i);
     const trackImage = getByRole('img');
     const previewBtn = getByRole('button', {
-      value: { text: 'Preview' }
+      name: 'Preview'
     });
     const audioElement = getByRole('audio');
 
@@ -37,7 +36,7 @@ describe('Tests for TrackCard component', () => {
     // Initial text should be 'Preview'
     const { getByRole } = renderProvider(<TrackCard trackDetails={trackDetails} onToggle={onToggle} />);
     previewBtn = getByRole('button', {
-      value: { text: 'Preview' }
+      name: 'Preview'
     });
     expect(previewBtn).toBeInTheDocument();
 
@@ -45,7 +44,7 @@ describe('Tests for TrackCard component', () => {
     fireEvent.click(previewBtn);
     await timeout(100);
     previewBtn = getByRole('button', {
-      value: { text: 'Pause' }
+      name: 'Pause'
     });
     expect(previewBtn).toBeInTheDocument();
 
@@ -53,7 +52,7 @@ describe('Tests for TrackCard component', () => {
     fireEvent.click(previewBtn);
     await timeout(100);
     previewBtn = getByRole('button', {
-      value: { text: 'Preview' }
+      name: 'Preview'
     });
     expect(previewBtn).toBeInTheDocument();
   });
@@ -61,7 +60,7 @@ describe('Tests for TrackCard component', () => {
   it('should set button text back to "Preview" when audio preview ends', () => {
     const { getByRole } = renderProvider(<TrackCard trackDetails={trackDetails} />);
     const previewBtn = getByRole('button', {
-      value: { text: 'Preview' }
+      name: 'Preview'
     });
     const audioElement = getByRole('audio');
 

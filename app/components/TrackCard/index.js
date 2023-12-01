@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import Card from '@mui/material/Card';
 import Button from '@mui/material/Button';
@@ -21,6 +22,7 @@ const Image = styled.img`
 export default function TrackCard({ trackDetails, onToggle, isPlaying }) {
   const audioRef = useRef();
   const [play, setPlay] = useState(isPlaying);
+  const history = useHistory();
 
   useEffect(() => {
     if (isPlaying) {
@@ -43,6 +45,10 @@ export default function TrackCard({ trackDetails, onToggle, isPlaying }) {
     }
   };
 
+  const handleDetailsBtnClick = (trackId) => {
+    history.push(`/itunes/${trackId}`);
+  };
+
   return (
     <>
       <CustomCard role="track-card">
@@ -58,6 +64,13 @@ export default function TrackCard({ trackDetails, onToggle, isPlaying }) {
           {play ? <T id="pause" /> : <T id="preview" />}
         </Button>
         <audio ref={audioRef} src={trackDetails.previewUrl} onEnded={() => setPlay(false)} role="audio" />
+        <Button
+          variant="secondary"
+          sx={{ border: '1px solid black', margin: '1rem' }}
+          onClick={() => handleDetailsBtnClick(trackDetails.trackId)}
+        >
+          <T id="details" />
+        </Button>
       </CustomCard>
     </>
   );
@@ -65,6 +78,7 @@ export default function TrackCard({ trackDetails, onToggle, isPlaying }) {
 
 TrackCard.propTypes = {
   trackDetails: PropTypes.shape({
+    trackId: PropTypes.number,
     trackName: PropTypes.string,
     artistName: PropTypes.string,
     artworkUrl100: PropTypes.string,

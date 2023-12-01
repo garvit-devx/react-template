@@ -9,14 +9,14 @@ describe('Tests for iTunes Api', () => {
       resultCount: 1,
       results: [
         {
-          tranckName: 'ignite',
+          trackName: 'ignite',
           artistName: 'Alan Walker',
           previewUrl: 'Some URL'
         }
       ]
     };
     const mock = new MockAdapter(getApiClient('iTunes').axiosInstance);
-    mock.onGet(`/search?term=${searchTerm}`).reply(200, data);
+    mock.onGet(`/search?term=${searchTerm}&media=music`).reply(200, data);
     const apiResponse = await getTracks(searchTerm);
     expect(apiResponse.data).toEqual(data);
   });

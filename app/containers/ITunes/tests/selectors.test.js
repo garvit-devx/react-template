@@ -1,5 +1,5 @@
-import { selectITunesDomain, selectTracks, selectError, selectITunes } from '../selectors';
-import { initialState } from '../reducer';
+import { selectITunesProviderDomain, selectTracks, selectError, selectITunes } from '../../ITunesProvider/selectors';
+import { initialState } from '../../ITunesProvider/reducer';
 
 describe('ITunes selector tests', () => {
   const mockedState = {
@@ -38,7 +38,7 @@ describe('ITunes selector tests', () => {
   });
 
   it('should return the global state', () => {
-    const selector = selectITunesDomain(initialState);
+    const selector = selectITunesProviderDomain(initialState);
     expect(selector).toEqual(initialState);
   });
 });

@@ -18,9 +18,9 @@ import { compose } from 'redux';
 import { injectSaga } from 'redux-injectors';
 import If from '@app/components/If/index';
 import TrackCard from '@app/components/TrackCard/index';
-import { selectError, selectTracks } from './selectors';
-import iTunesSaga from './saga';
-import { iTunesCreators } from './reducer';
+import { selectError, selectTracks } from '@app/containers/ITunesProvider/selectors';
+import iTunesProviderSaga from '@app/containers/ITunesProvider/saga';
+import { iTunesProviderCreators } from '@app/containers/ITunesProvider/reducer';
 
 const PageContainer = styled(Container)`
   && {
@@ -38,8 +38,7 @@ const GridContainer = styled.div`
 export function ITunes({ dispatchGetTracks, tracks, maxwidth }) {
   const [searchText, setSearchText] = useState('');
   const [currentAudioUrl, setCurrentAudioUrl] = useState(null);
-
-  const allTracks = get(tracks, 'results', []);
+  const allTracks = Object.values(get(tracks, 'results', {}));
   const totalResults = get(tracks, 'resultCount', 0);
 
   const handleOnSubmit = async (e) => {
@@ -88,7 +87,7 @@ ITunes.propTypes = {
   dispatchGetTracks: PropTypes.func,
   tracks: PropTypes.shape({
     resultCount: PropTypes.number,
-    results: PropTypes.array
+    results: PropTypes.object
   }),
   maxwidth: PropTypes.number
 };
@@ -99,7 +98,7 @@ const mapStateToProps = createStructuredSelector({
 });
 
 function mapDispatchToProps(dispatch) {
-  const { requestGetTracks } = iTunesCreators;
+  const { requestGetTracks } = iTunesProviderCreators;
   return {
     dispatchGetTracks: (searchTerm) => dispatch(requestGetTracks(searchTerm))
   };
@@ -107,6 +106,6 @@ function mapDispatchToProps(dispatch) {
 
 const withConnect = connect(mapStateToProps, mapDispatchToProps);
 
-export default compose(withConnect, injectSaga({ key: 'iTunes', saga: iTunesSaga }))(ITunes);
+export default compose(withConnect, injectSaga({ key: 'iTunes', saga: iTunesProviderSaga }))(ITunes);
 
 export const ITunesTest = compose()(ITunes);

@@ -1,15 +1,15 @@
-import { iTunesReducer, iTunesTypes, initialState } from '../reducer';
+import { iTunesProviderReducer, iTunesProviderTypes, initialState } from '../../ITunesProvider/reducer';
 
 describe('ITunes reducer tests', () => {
   it('should return the initial state by default', () => {
-    expect(iTunesReducer(undefined, {})).toEqual(initialState);
+    expect(iTunesProviderReducer(undefined, {})).toEqual(initialState);
   });
 
   it('should return the updated state when an action of type REQUEST_GET_TRACKS is dispatched', () => {
     const expectedResult = { ...initialState, searchTerm: 'ignite' };
     expect(
-      iTunesReducer(initialState, {
-        type: iTunesTypes.REQUEST_GET_TRACKS,
+      iTunesProviderReducer(initialState, {
+        type: iTunesProviderTypes.REQUEST_GET_TRACKS,
         searchTerm: 'ignite'
       })
     ).toEqual(expectedResult);
@@ -20,8 +20,8 @@ describe('ITunes reducer tests', () => {
     const expectedResult = { ...initialState, tracks: apiResponse };
 
     expect(
-      iTunesReducer(initialState, {
-        type: iTunesTypes.SUCCESS_GET_TRACKS,
+      iTunesProviderReducer(initialState, {
+        type: iTunesProviderTypes.SUCCESS_GET_TRACKS,
         tracks: apiResponse
       })
     ).toEqual(expectedResult);
@@ -32,8 +32,8 @@ describe('ITunes reducer tests', () => {
     const expectedResult = { ...initialState, error };
 
     expect(
-      iTunesReducer(initialState, {
-        type: iTunesTypes.FAILURE_GET_TRACKS,
+      iTunesProviderReducer(initialState, {
+        type: iTunesProviderTypes.FAILURE_GET_TRACKS,
         error
       })
     ).toEqual(expectedResult);
