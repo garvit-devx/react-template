@@ -9,6 +9,6 @@ const selectITunesDetailsDomain = (state) => state.iTunesDetails || initialState
 
 export const selectITunesDetails = () => createSelector(selectITunesDetailsDomain, (substate) => substate);
 
-export const selectResults = () => createSelector(selectITunesDetailsDomain, (substate) => substate.results);
+export const selectSongDetails = () => createSelector(selectITunesDetailsDomain, (substate) => substate.songDetails);
 
 export const selectError = () => createSelector(selectITunesDetailsDomain, (substate) => substate.error);

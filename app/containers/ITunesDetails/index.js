@@ -13,16 +13,16 @@ import { injectSaga } from 'redux-injectors';
 import T from '@components/T';
 import TrackDetails from '@app/components/TrackDetails/index';
 import { selectTrackById } from '@app/containers/ITunesProvider/selectors';
-import { selectResults, selectError } from './selectors';
+import { selectSongDetails, selectError } from './selectors';
 import saga from './saga';
 import { iTunesDetailsCreators } from './reducer';
 
-export function ITunesDetails({ results, dispatchGetTrackDetails, error, trackById, match }) {
+export function ITunesDetails({ songDetails, dispatchGetTrackDetails, error, trackById, match }) {
   const trackId = match.params.trackId;
   const { artistName, artworkUrl100, previewUrl, trackName, trackTimeMillis } = trackById
     ? trackById
-    : results
-    ? results.results[0]
+    : songDetails
+    ? songDetails
     : {};
 
   useEffect(() => {
@@ -43,7 +43,7 @@ export function ITunesDetails({ results, dispatchGetTrackDetails, error, trackBy
 }
 
 ITunesDetails.propTypes = {
-  results: PropTypes.object,
+  songDetails: PropTypes.object,
   dispatchGetTrackDetails: PropTypes.func,
   error: PropTypes.object,
   trackById: PropTypes.object,
@@ -52,7 +52,7 @@ ITunesDetails.propTypes = {
 
 const mapStateToProps = (state, ownProps) =>
   createStructuredSelector({
-    results: selectResults(),
+    songDetails: selectSongDetails(),
     error: selectError(),
     trackById: selectTrackById(ownProps.match.params.trackId)
   });

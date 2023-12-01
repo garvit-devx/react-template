@@ -8,13 +8,13 @@ import { createActions } from 'reduxsauce';
 
 export const initialState = {
   trackId: null,
-  results: null,
+  songDetails: null,
   error: null
 };
 
 export const { Types: iTunesDetailsTypes, Creators: iTunesDetailsCreators } = createActions({
   getTrackDetails: ['trackId'],
-  successGetTrackDetails: ['results'],
+  successGetTrackDetails: ['songDetails'],
   failureGetTrackDetails: ['error']
 });
 
@@ -25,7 +25,7 @@ export const iTunesDetailsReducer = (state = initialState, action) => {
         draft.trackId = action.trackId;
         break;
       case iTunesDetailsTypes.SUCCESS_GET_TRACK_DETAILS:
-        draft.results = action.results;
+        draft.songDetails = action.songDetails;
         break;
       case iTunesDetailsTypes.FAILURE_GET_TRACK_DETAILS:
         draft.error = action.error;
