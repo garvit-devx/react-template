@@ -79,6 +79,8 @@ describe('<TrackDetails />', () => {
       value: { text: 'Play Preview' }
     });
 
+    fireEvent(audioElement, new Event('play'));
+    await timeout(1000);
     fireEvent(audioElement, new Event('ended'));
     await timeout(100);
     expect(button).toBeInTheDocument();

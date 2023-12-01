@@ -1,8 +1,10 @@
 import React from 'react';
 import { fireEvent } from '@testing-library/dom';
-// import { MemoryRouter } from 'react-router-dom';
+import * as Router from 'react-router-dom';
 import { renderProvider, timeout } from '@app/utils/testUtils';
 import TrackCard from '../index';
+
+const { BrowserRouter } = Router;
 
 const trackDetails = {
   trackId: 123,
@@ -70,17 +72,25 @@ describe('Tests for TrackCard component', () => {
     expect(previewBtn).toBeInTheDocument();
   });
 
-  // it('should navigate to the details page when details button is clicked', () => {
-  //   const { getByRole } = renderProvider(
-  //     <MemoryRouter initialEntries={['/itunes']}>
-  //       <TrackCard trackDetails={trackDetails} />
-  //     </MemoryRouter>
-  //   );
-  //   const detailsBtn = getByRole('button', {
-  //     name: 'Details'
-  //   });
+  it('should navigate to the details page when details button is clicked', () => {
+    const mockHistoryPush = jest.fn();
 
-  //   fireEvent.click(detailsBtn);
-  //   expect(window.location.pathname).toEqual('/itunes/123');
-  // })
+    const historyHistory = {
+      push: mockHistoryPush
+    };
+
+    jest.spyOn(Router, 'useHistory').mockImplementation(() => historyHistory);
+
+    const { getByRole } = renderProvider(
+      <BrowserRouter>
+        <TrackCard trackDetails={trackDetails} />
+      </BrowserRouter>
+    );
+    const detailsBtn = getByRole('button', {
+      name: 'Details'
+    });
+    fireEvent.click(detailsBtn);
+
+    expect(mockHistoryPush).toBeCalledWith('/itunes/123');
+  });
 });
