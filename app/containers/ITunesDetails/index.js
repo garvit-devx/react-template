@@ -4,7 +4,7 @@
  *
  */
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
@@ -19,17 +19,16 @@ import { iTunesDetailsCreators } from './reducer';
 
 export function ITunesDetails({ results, dispatchGetTrackDetails, error, trackById, match }) {
   const trackId = match.params.trackId;
-  const [trackDetails, setTrackDetails] = useState(null);
-  const { artistName, artworkUrl100, previewUrl, trackName, trackTimeMillis } = trackDetails ? trackDetails : trackById;
+  const { artistName, artworkUrl100, previewUrl, trackName, trackTimeMillis } = trackById
+    ? trackById
+    : results
+    ? results.results[0]
+    : {};
 
   useEffect(() => {
     // fetching data from redux
-    if (trackById.hasOwnProperty(trackId)) {
-      setTrackDetails(trackById[trackId]);
-    } else {
-      // making dispatch action to get track details from api
+    if (trackById?.trackId != trackId) {
       dispatchGetTrackDetails(trackId);
-      setTrackDetails(results?.results[0]);
     }
   }, [trackId]);
 
