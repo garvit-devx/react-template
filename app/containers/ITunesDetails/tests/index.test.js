@@ -7,17 +7,11 @@
 
 import React from 'react';
 import { MemoryRouter, Route } from 'react-router-dom';
-// import { fireEvent } from '@testing-library/dom';
 import { renderProvider } from '@utils/testUtils';
-import { ITunesDetailsTest as ITunesDetails } from '../index';
+import { ITunesDetailsTest as ITunesDetails } from '@app/containers/ITunesDetails/index';
 
 describe('<ITunesDetails /> container tests', () => {
-  // let submitSpy;
   let dispatchGetTrackDetailsSpy = jest.fn();
-
-  beforeEach(() => {
-    // submitSpy = jest.fn();
-  });
 
   it('should render and match the snapshot', () => {
     const { baseElement } = renderProvider(

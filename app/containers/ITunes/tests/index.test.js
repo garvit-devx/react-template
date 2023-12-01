@@ -8,7 +8,7 @@
 import React from 'react';
 import { fireEvent } from '@testing-library/dom';
 import { renderProvider } from '@utils/testUtils';
-import { ITunesTest as ITunes } from '../index';
+import { ITunesTest as ITunes } from '@app/containers/ITunes/index';
 
 describe('<ITunes /> container tests', () => {
   let submitSpy;

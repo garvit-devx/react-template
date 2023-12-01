@@ -1,4 +1,4 @@
-import { iTunesProviderReducer, iTunesProviderTypes, initialState } from '../reducer';
+import { iTunesProviderReducer, iTunesProviderTypes, initialState } from '@app/containers/ITunesProvider/reducer';
 
 describe('ITunesProvider reducer tests', () => {
   it('should return the initial state by default', () => {

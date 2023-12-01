@@ -5,8 +5,8 @@
 import { takeLatest, call, put } from 'redux-saga/effects';
 import { apiResponseGenerator } from '@app/utils/testUtils';
 import { getTracks } from '@app/services/itunesApi';
-import iTunesProviderSaga, { getAllTracks } from '../saga';
-import { iTunesProviderTypes } from '../reducer';
+import iTunesProviderSaga, { getAllTracks } from '@app/containers/ITunesProvider/saga';
+import { iTunesProviderTypes } from '@app/containers/ITunesProvider/reducer';
 
 describe('ITunesProvider saga tests', () => {
   const generator = iTunesProviderSaga();

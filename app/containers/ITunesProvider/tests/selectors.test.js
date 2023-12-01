@@ -1,5 +1,11 @@
-import { selectITunesProviderDomain, selectITunes, selectError, selectTracks, selectTrackById } from '../selectors';
-import { initialState } from '../reducer';
+import {
+  selectITunesProviderDomain,
+  selectITunes,
+  selectError,
+  selectTracks,
+  selectTrackById
+} from '@app/containers/ITunesProvider/selectors';
+import { initialState } from '@app/containers/ITunesProvider/reducer';
 
 describe('ITunesProvider selector tests', () => {
   const mockedState = {
