@@ -40,17 +40,13 @@ describe('<ITunesDetails /> container tests', () => {
   });
 
   it('should render track details component correctly if data is present in redux', async () => {
-    const tracks = {
-      results: {
-        12345: {
-          trackId: 12345,
-          trackName: 'ignite',
-          artistName: 'Alan Walker',
-          artworkUrl100: 'Some URL',
-          previewUrl: 'Some URL',
-          trackTimeMillis: 100000
-        }
-      }
+    const trackById = {
+      trackId: 12345,
+      trackName: 'ignite',
+      artistName: 'Alan Walker',
+      artworkUrl100: 'Some URL',
+      previewUrl: 'Some URL',
+      trackTimeMillis: 100000
     };
 
     const { getByText, getByRole } = renderProvider(
@@ -59,7 +55,7 @@ describe('<ITunesDetails /> container tests', () => {
           <ITunesDetails
             dispatchGetTrackDetails={dispatchGetTrackDetailsSpy}
             error={null}
-            tracks={tracks}
+            trackById={trackById}
             match={{ params: { trackId: '12345' } }}
           />
         </Route>

@@ -1,7 +1,7 @@
 import NotFound from '@containers/NotFoundPage/Loadable';
 import HomeContainer from '@containers/HomeContainer/Loadable';
 import ITunes from '@containers/ITunes/Loadable';
-import ITunesDetails from '@containers/ITunesDeatails/Loadable';
+import ITunesDetails from '@app/containers/ITunesDetails/Loadable';
 import routeConstants from '@utils/routeConstants';
 
 export const routeConfig = {
