@@ -5,11 +5,11 @@
 import { takeLatest, call, put } from 'redux-saga/effects';
 import { getTrackDetails } from '@app/services/itunesApi';
 import { apiResponseGenerator } from '@app/utils/testUtils';
-import iTunesDeatailsSaga, { getDetails } from '../saga';
-import { iTunesDetailsTypes } from '../reducer';
+import iTunesDetailsSaga, { getDetails } from '@app/containers/ITunesDetails/saga';
+import { iTunesDetailsTypes } from '@app/containers/ITunesDetails/reducer';
 
 describe('ITunesDeatails saga tests', () => {
-  const generator = iTunesDeatailsSaga();
+  const generator = iTunesDetailsSaga();
   const trackId = 12345;
   let getDetailsGenerator = getDetails({ trackId });
 
@@ -29,7 +29,7 @@ describe('ITunesDeatails saga tests', () => {
     expect(getDetailsGenerator.next(apiResponseGenerator(true, apiResponse)).value).toEqual(
       put({
         type: iTunesDetailsTypes.SUCCESS_GET_TRACK_DETAILS,
-        results: apiResponse
+        songDetails: apiResponse.results[0]
       })
     );
 

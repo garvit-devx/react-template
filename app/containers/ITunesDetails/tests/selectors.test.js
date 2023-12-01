@@ -1,10 +1,10 @@
-import { selectITunesDetails, selectResults, selectError } from '../selectors';
+import { selectITunesDetails, selectSongDetails, selectError } from '@app/containers/ITunesDetails/selectors';
 
 describe('ITunesDetails selector tests', () => {
   const mockedState = {
     iTunesDetails: {
       trackId: '123456789',
-      results: { resultCount: 1, results: [{ trackName: 'test' }] },
+      songDetails: { trackName: 'test' },
       error: { errorMessage: 'Invalid request' }
     }
   };
@@ -14,9 +14,9 @@ describe('ITunesDetails selector tests', () => {
     expect(iTunesDetailsSelector(mockedState)).toEqual(mockedState.iTunesDetails);
   });
 
-  it('should select the results state', () => {
-    const resultsSelector = selectResults();
-    expect(resultsSelector(mockedState)).toEqual(mockedState.iTunesDetails.results);
+  it('should select the songDetails state', () => {
+    const resultsSelector = selectSongDetails();
+    expect(resultsSelector(mockedState)).toEqual(mockedState.iTunesDetails.songDetails);
   });
 
   it('should select the error state', () => {
