@@ -1,8 +1,5 @@
 name: iTunes CD
-on:
-  push:
-    branches:
-      - '*'
+on: [push]
 
 jobs:
   deploy:
