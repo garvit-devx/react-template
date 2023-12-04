@@ -1,6 +1,6 @@
 name: iTunes CI
 on:
-  pull-request:
+  pull_request:
     branches:
       - master
       - develop
