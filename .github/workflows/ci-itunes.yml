@@ -1,5 +1,9 @@
 name: iTunes CI
-on: [push]
+on:
+  pull-request:
+    branches:
+      - master
+      - develop
 
 jobs: 
   build:
