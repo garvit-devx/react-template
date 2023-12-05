@@ -27,10 +27,16 @@ jobs:
         run: yarn 
 
       - name: Lint
-        run: yarn lint
+        run: yarn lint:ci
 
       - name: Test
         run: yarn test
 
+      - name: Accessibility tests using Storybook
+        run: yarn test-storybook:ci
+
       - name: Build
         run: yarn build:prod
+
+      - name: LHCI benchmark
+        run: yarn lhci
