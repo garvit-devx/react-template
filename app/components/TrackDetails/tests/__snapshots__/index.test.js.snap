@@ -5,7 +5,7 @@ exports[`<TrackDetails /> should render and match the snapshot 1`] = `
   <div>
     <div
       class="css-rr8yu3 eh9f6zb1"
-      role="track-details"
+      role="application"
     >
       <div
         style="width: 300px;"

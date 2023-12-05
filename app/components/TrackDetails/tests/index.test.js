@@ -25,7 +25,7 @@ describe('<TrackDetails />', () => {
 
   it('should contain 1 TrackDetails component', () => {
     const { getAllByRole } = renderWithIntl(<TrackDetails trackDetails={trackDetails} />);
-    expect(getAllByRole('track-details').length).toBe(1);
+    expect(getAllByRole('application').length).toBe(1);
   });
 
   it('should render track details component with all necessary elements', () => {

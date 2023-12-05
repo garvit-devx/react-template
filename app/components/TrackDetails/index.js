@@ -41,7 +41,7 @@ export function TrackDetails({ trackDetails }) {
   }
 
   return (
-    <TrackDetailsContainer role="track-details">
+    <TrackDetailsContainer role="application">
       <div style={{ width: '300px' }}>
         <TrackImage src={artworkUrl100} alt={trackName} />
       </div>
