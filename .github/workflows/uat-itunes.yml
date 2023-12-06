@@ -13,7 +13,6 @@ jobs:
       matrix:
         node-version: [16.x]
     env: #2
-      SOURCE_DIR: './build/'
       AWS_REGION: ${{ secrets.AWS_REGION }}
       AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
       AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
@@ -38,10 +37,22 @@ jobs:
 
       - name: Build # 4
         run: export BRANCH_NAME=${{ steps.vars.outputs.branch }} && yarn build:uat
-         
+
       - name: AWS Deploy #5
         uses: jakejarvis/s3-sync-action@v0.5.0
         with:
           args: --acl public-read --follow-symlinks
         env:
+          SOURCE_DIR: './build/'
           DEST_DIR: ${{steps.vars.outputs.branch}}
+
+      - name: List UAT branches in fallback page
+        run: yarn ls-uat-branches
+        
+      - name: Deploy S3 fallback page
+        uses: jakejarvis/s3-sync-action@v0.5.0
+        with:
+          args: --acl public-read --follow-symlinks --exclude 'tests/*'
+        env:
+          SOURCE_DIR: './uat/'
+          DEST_DIR: ''
