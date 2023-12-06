@@ -41,7 +41,7 @@ export function TrackDetails({ trackDetails }) {
   }
 
   return (
-    <TrackDetailsContainer>
+    <TrackDetailsContainer data-testid="track-details">
       <div style={{ width: '300px' }}>
         <TrackImage src={artworkUrl100} alt={trackName} />
       </div>
@@ -54,7 +54,7 @@ export function TrackDetails({ trackDetails }) {
         <Button variant="secondary" sx={{ border: '1px solid black', margin: '1rem 0' }} onClick={handleOnClick}>
           {isPlaying ? <T id="pause" /> : <T id="play_preview" />}
         </Button>
-        <audio src={previewUrl} ref={audioRef} onEnded={() => setIsPlaying(false)} />
+        <audio src={previewUrl} ref={audioRef} onEnded={() => setIsPlaying(false)} data-testid="audio" />
       </div>
     </TrackDetailsContainer>
   );

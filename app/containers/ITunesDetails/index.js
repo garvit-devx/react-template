@@ -39,8 +39,6 @@ export function ITunesDetails({ songDetails, dispatchGetTrackDetails, error, tra
       </div>
     );
   }
-
-  // Displaying track details if error is null
   return <TrackDetails trackDetails={{ artistName, artworkUrl100, previewUrl, trackName, trackTimeMillis }} />;
 }
 

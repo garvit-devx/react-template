@@ -1,9 +1,13 @@
 import React from 'react';
 import { fireEvent } from '@testing-library/dom';
+import * as Router from 'react-router-dom';
 import { renderProvider, timeout } from '@app/utils/testUtils';
 import TrackCard from '../index';
 
+const { BrowserRouter } = Router;
+
 const trackDetails = {
+  trackId: 123,
   trackName: 'Ignite',
   artistName: 'Alan Walker',
   artworkUrl100: 'some url string',
@@ -66,5 +70,27 @@ describe('Tests for TrackCard component', () => {
 
     fireEvent(audioElement, new Event('ended'));
     expect(previewBtn).toBeInTheDocument();
+  });
+
+  it('should navigate to the details page when details button is clicked', () => {
+    const mockHistoryPush = jest.fn();
+
+    const historyHistory = {
+      push: mockHistoryPush
+    };
+
+    jest.spyOn(Router, 'useHistory').mockImplementation(() => historyHistory);
+
+    const { getByRole } = renderProvider(
+      <BrowserRouter>
+        <TrackCard trackDetails={trackDetails} />
+      </BrowserRouter>
+    );
+    const detailsBtn = getByRole('button', {
+      name: 'Details'
+    });
+    fireEvent.click(detailsBtn);
+
+    expect(mockHistoryPush).toBeCalledWith('/itunes/123');
   });
 });

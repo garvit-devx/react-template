@@ -1,0 +1,61 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<TrackDetails /> should render and match the snapshot 1`] = `
+<body>
+  <div>
+    <div
+      class="css-rr8yu3 eh9f6zb1"
+      data-testid="track-details"
+    >
+      <div
+        style="width: 300px;"
+      >
+        <img
+          alt="Perfect"
+          class="css-1bfxc3 eh9f6zb0"
+          src="Some URL"
+        />
+      </div>
+      <div>
+        <p
+          class="css-lh9t18 egtqi0h0"
+          data-testid="t"
+        >
+          Track Name: Perfect
+        </p>
+        <p
+          class="css-lh9t18 egtqi0h0"
+          data-testid="t"
+        >
+          Artist: One Direction
+        </p>
+        <p
+          class="css-lh9t18 egtqi0h0"
+          data-testid="t"
+        >
+          Track duration: 2057.61 minutes
+        </p>
+        <button
+          class="MuiButtonBase-root MuiButton-root MuiButton-secondary MuiButton-secondaryPrimary MuiButton-sizeMedium MuiButton-secondarySizeMedium MuiButton-root MuiButton-secondary MuiButton-secondaryPrimary MuiButton-sizeMedium MuiButton-secondarySizeMedium css-3uxdid-MuiButtonBase-root-MuiButton-root"
+          tabindex="0"
+          type="button"
+        >
+          <p
+            class="css-lh9t18 egtqi0h0"
+            data-testid="t"
+          >
+            Play Preview
+          </p>
+          <span
+            class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+          />
+        </button>
+        <audio
+          data-testid="audio"
+          src="Some URL"
+        />
+      </div>
+    </div>
+  </div>
+</body>
+`;
