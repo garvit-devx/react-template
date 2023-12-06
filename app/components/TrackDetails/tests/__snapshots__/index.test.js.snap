@@ -5,7 +5,7 @@ exports[`<TrackDetails /> should render and match the snapshot 1`] = `
   <div>
     <div
       class="css-rr8yu3 eh9f6zb1"
-      role="track-details"
+      data-testid="track-details"
     >
       <div
         style="width: 300px;"
@@ -51,7 +51,7 @@ exports[`<TrackDetails /> should render and match the snapshot 1`] = `
           />
         </button>
         <audio
-          role="audio"
+          data-testid="audio"
           src="Some URL"
         />
       </div>
