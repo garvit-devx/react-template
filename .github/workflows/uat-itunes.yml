@@ -34,4 +34,4 @@ jobs:
         with:
           args: --acl public-read --follow-symlinks
         env:
-          DEST_DIR: ${{steps.vars.outputs.branch}
+          DEST_DIR: ${{steps.vars.outputs.branch}}
