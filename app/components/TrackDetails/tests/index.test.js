@@ -24,17 +24,17 @@ describe('<TrackDetails />', () => {
   });
 
   it('should contain 1 TrackDetails component', () => {
-    const { getAllByRole } = renderWithIntl(<TrackDetails trackDetails={trackDetails} />);
-    expect(getAllByRole('application').length).toBe(1);
+    const { getAllByTestId } = renderWithIntl(<TrackDetails trackDetails={trackDetails} />);
+    expect(getAllByTestId('track-details').length).toBe(1);
   });
 
   it('should render track details component with all necessary elements', () => {
-    const { getByRole, getByText } = renderWithIntl(<TrackDetails trackDetails={trackDetails} />);
+    const { getByTestId, getByRole, getByText } = renderWithIntl(<TrackDetails trackDetails={trackDetails} />);
 
     const playButton = getByRole('button', {
       value: { text: 'Play Preview' }
     });
-    const audioElement = getByRole('audio');
+    const audioElement = getByTestId('audio');
     const tackImage = getByRole('img');
     const trackName = getByText(/perfect/i);
     const artistName = getByText(/one direction/i);
@@ -72,17 +72,26 @@ describe('<TrackDetails />', () => {
   });
 
   it('should change button text to Play Preview when audio preview ends', async () => {
-    const { getByRole } = renderWithIntl(<TrackDetails trackDetails={trackDetails} />);
+    const { getByRole, getByTestId } = renderWithIntl(<TrackDetails trackDetails={trackDetails} />);
 
-    const audioElement = getByRole('audio');
-    const button = getByRole('button', {
-      value: { text: 'Play Preview' }
-    });
+    let button;
+
+    const audioElement = getByTestId('audio');
 
     fireEvent(audioElement, new Event('play'));
     await timeout(1000);
+
+    button = getByRole('button', {
+      value: { text: 'Pause' }
+    });
+    expect(button).toBeInTheDocument();
+
     fireEvent(audioElement, new Event('ended'));
     await timeout(100);
+
+    button = getByRole('button', {
+      value: { text: 'Play Preview' }
+    });
     expect(button).toBeInTheDocument();
   });
 });
