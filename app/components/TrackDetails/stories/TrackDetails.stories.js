@@ -7,7 +7,19 @@
  */
 
 import React from 'react';
-import { storiesOf } from '@storybook/react';
 import { TrackDetails } from '../index';
 
-storiesOf('TrackDetails').add('simple', () => <TrackDetails />);
+const trackDetails = {
+  artistName: 'Alan Walker',
+  trackName: 'The Way You Make Me Feel',
+  trackTimeMillis: 214000,
+  previewUrl: 'Some URL string',
+  artworkUrl100: 'Some URL string'
+};
+
+export default {
+  title: 'TrackDetails',
+  component: TrackDetails
+};
+
+export const SampleTrackDetails = () => <TrackDetails trackDetails={trackDetails} />;
