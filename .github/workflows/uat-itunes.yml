@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: [16.20.x]
+        node-version: [12.x]
     env: #2
       SOURCE_DIR: './build/'
       AWS_REGION: ${{ secrets.AWS_REGION }}
