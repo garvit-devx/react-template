@@ -1,13 +1,23 @@
 import { createBrowserHistory } from 'history';
-import { isUAT } from './index';
+import routeConstants from '@utils/routeConstants';
 
-export function getBaseName() {
-  if (isUAT()) {
-    return `/${process.env.BRANCH_NAME}`;
-  }
+const routes = Object.keys(routeConstants);
+const pathname = window.location.pathname;
+let baseUrl = '';
 
-  return '';
+if (process.env.ENVIRONMENT_NAME === 'uat') {
+  routes.forEach((routeKey) => {
+    const route = routeConstants[routeKey].route;
+    if (pathname.includes(route)) {
+      if (pathname.substring(pathname.length - route.length, pathname.length) === route) {
+        baseUrl = pathname.substring(0, pathname.length - route.length);
+      }
+      if (pathname.substring(pathname.length - route.length, pathname.length - 1) === `${route}/`) {
+        baseUrl = pathname.substring(0, pathname.length - route.length - 1);
+      }
+    }
+  });
 }
 
-const history = createBrowserHistory({ basename: getBaseName() });
+const history = createBrowserHistory({ basename: baseUrl });
 export default history;
