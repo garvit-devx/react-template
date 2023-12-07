@@ -34,7 +34,7 @@
     "prebuild:uat": "npm run build:clean",
     "prebuild:dev": "npm run build:clean",
     "build:prod": "export ENVIRONMENT_NAME=production && npm run compile-intl && cross-env NODE_ENV=production webpack --config internals/webpack/webpack.config.prod.js --color --progress --stats-children --stats-error-details",
-    "build:uat": "export ENVIRONMENT_NAME=development && cross-env NODE_ENV=production webpack --config internals/webpack/webpack.config.prod.js --color --progress",
+    "build:uat": "export ENVIRONMENT_NAME=development && npm run compile-intl && cross-env NODE_ENV=production webpack --config internals/webpack/webpack.config.prod.js --color --progress",
     "build:dev": "export ENVIRONMENT_NAME=development && cross-env NODE_ENV=development webpack --config internals/webpack/webpack.config.dev.js --color --progress",
     "postbuild:prod": "yarn build-storybook:prod -o build/stories",
     "postbuild:uat": "yarn build-storybook:dev -o build/stories",
