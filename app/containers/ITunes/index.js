@@ -4,13 +4,13 @@
  *
  */
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import get from 'lodash/get';
 import isEmpty from 'lodash/isEmpty';
 import styled from '@emotion/styled';
-import { OutlinedInput, Button, Container } from '@mui/material';
+import { Button, Container } from '@mui/material';
 import { t } from '@lingui/macro';
 import T from '@components/T';
 import { createStructuredSelector } from 'reselect';
@@ -18,7 +18,7 @@ import { compose } from 'redux';
 import { injectSaga } from 'redux-injectors';
 import If from '@app/components/If/index';
 import TrackCard from '@app/components/TrackCard/index';
-import { selectError, selectTracks } from '@app/containers/ITunesProvider/selectors';
+import { selectError, selectTracks, selectSearchTerm } from '@app/containers/ITunesProvider/selectors';
 import iTunesProviderSaga from '@app/containers/ITunesProvider/saga';
 import { iTunesProviderCreators } from '@app/containers/ITunesProvider/reducer';
 
@@ -35,15 +35,47 @@ const GridContainer = styled.div`
   grid-gap: 1em;
 `;
 
-export function ITunes({ dispatchGetTracks, tracks, maxwidth }) {
+const SearchButton = styled(Button)`
+  border: 1px solid black;
+  margin: 0 1em;
+  padding: 8px 1em;
+`;
+
+const Input = styled.input`
+  min-width: 350px;
+  padding: 8px 1em 10px;
+  border: 1px solid #dcdcdc;
+  outline: none;
+  transition: all 0.3s;
+  border-radius: 4px;
+  background: transparent;
+
+  &:focus {
+    border: 1px solid black;
+  }
+`;
+
+export function ITunes({ dispatchGetTracks, tracks, maxwidth, searchTerm }) {
   const [searchText, setSearchText] = useState('');
   const [currentAudioUrl, setCurrentAudioUrl] = useState(null);
+  const [loading, setLoading] = useState(false);
+
   const allTracks = Object.values(get(tracks, 'results', {}));
   const totalResults = get(tracks, 'resultCount', 0);
+
+  useEffect(() => {
+    // if there is a search term but no results in the track substate, then show loading text
+    if (searchTerm && Object.values(get(tracks, 'results', {})).length === 0) {
+      setLoading(true);
+    } else {
+      setLoading(false);
+    }
+  }, [tracks?.results]);
 
   const handleOnSubmit = async (e) => {
     e.preventDefault();
     dispatchGetTracks(searchText);
+    setLoading(true);
   };
 
   const handleToggle = (audioUrl) => {
@@ -53,19 +85,22 @@ export function ITunes({ dispatchGetTracks, tracks, maxwidth }) {
   return (
     <PageContainer maxwidth={maxwidth}>
       <T id="itunes_search" />
-      <form onSubmit={handleOnSubmit} role="form">
-        <OutlinedInput
-          placeholder={t`Search any track`}
-          sx={{ minWidth: '350px' }}
-          onChange={(e) => setSearchText(e.target.value)}
-          value={searchText}
-        />
-        <Button variant="secondary" type="submit" sx={{ border: '1px solid black', margin: '0 0.5em' }}>
+      <form onSubmit={handleOnSubmit} role="form" style={{ margin: '0.5em 0' }}>
+        <Input placeholder={t`Search any track`} onChange={(e) => setSearchText(e.target.value)} value={searchText} />
+        <SearchButton
+          variant="secondary"
+          type="submit"
+          sx={{ border: '1px solid black', margin: '0 1em', padding: '10px 1em' }}
+        >
           <T id="search" />
-        </Button>
+        </SearchButton>
       </form>
 
-      <If condition={!isEmpty(allTracks) && totalResults > 0}>
+      <If condition={loading}>
+        <T id="loading" style={{ margin: '1rem 0' }} />
+      </If>
+
+      <If condition={!loading && !isEmpty(allTracks) && totalResults > 0}>
         <T id="total_results" values={{ totalResults }} style={{ margin: '1rem 0' }} />
 
         <GridContainer>
@@ -89,12 +124,14 @@ ITunes.propTypes = {
     resultCount: PropTypes.number,
     results: PropTypes.object
   }),
+  searchTerm: PropTypes.string,
   maxwidth: PropTypes.number
 };
 
 const mapStateToProps = createStructuredSelector({
   tracks: selectTracks(),
-  error: selectError()
+  error: selectError(),
+  searchTerm: selectSearchTerm()
 });
 
 function mapDispatchToProps(dispatch) {

@@ -15,6 +15,7 @@
   "something_went_wrong": "Sorry. Something went wrong! Please try again in sometime.",
   "stories": "Go to Storybook",
   "wednesday_solutions": "Wednesday Solutions",
+  "itunes_search_app": "iTunes Search App",
   "itunes_search": "iTunes Search",
   "itunes_search_placeholder": "Search any track",
   "track_name": "Track Name: {trackName}",
@@ -27,5 +28,6 @@
   "total_results": "Total Results: {totalResults}",
   "preview": "Preview",
   "track_name_detail": "{trackName}",
-  "details": "Details"
+  "details": "Details",
+  "loading": "Loading..."
 }

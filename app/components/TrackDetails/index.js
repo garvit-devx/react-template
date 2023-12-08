@@ -22,6 +22,7 @@ const TrackImage = styled.img`
   height: auto;
   object-fit: cover;
   aspect-ratio: 1/1;
+  border-radius: 10px;
 `;
 
 export function TrackDetails({ trackDetails }) {
@@ -47,11 +48,11 @@ export function TrackDetails({ trackDetails }) {
       </div>
 
       <div>
-        <T id="track_name" values={{ trackName }} />
+        <T id="track_name" values={{ trackName }} type="heading" style={{ marginBottom: '1rem' }} />
         <T id="track_artist" values={{ artistName }} />
         <T id="track_time" values={{ trackTimeInMinutes }} />
 
-        <Button variant="secondary" sx={{ border: '1px solid black', margin: '1rem 0' }} onClick={handleOnClick}>
+        <Button variant="secondary" sx={{ border: '1px solid black', margin: '1.5rem 0' }} onClick={handleOnClick}>
           {isPlaying ? <T id="pause" /> : <T id="play_preview" />}
         </Button>
         <audio src={previewUrl} ref={audioRef} onEnded={() => setIsPlaying(false)} data-testid="audio" />

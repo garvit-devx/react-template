@@ -4,7 +4,7 @@ exports[`<ITunes /> container tests should render and match the snapshot 1`] = `
 <body>
   <div>
     <div
-      class="MuiContainer-root MuiContainer-maxWidthLg e1qlpjed1 css-q20w81-MuiContainer-root"
+      class="MuiContainer-root MuiContainer-maxWidthLg e1qlpjed3 css-q20w81-MuiContainer-root"
     >
       <p
         class="css-lh9t18 egtqi0h0"
@@ -14,33 +14,15 @@ exports[`<ITunes /> container tests should render and match the snapshot 1`] = `
       </p>
       <form
         role="form"
+        style="margin: 0.5em 0px;"
       >
-        <div
-          class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary css-djb9n3-MuiInputBase-root-MuiOutlinedInput-root"
-        >
-          <input
-            class="MuiInputBase-input MuiOutlinedInput-input css-1t8l2tu-MuiInputBase-input-MuiOutlinedInput-input"
-            placeholder="Search any track"
-            type="text"
-            value=""
-          />
-          <fieldset
-            aria-hidden="true"
-            class="MuiOutlinedInput-notchedOutline css-1d3z3hw-MuiOutlinedInput-notchedOutline"
-          >
-            <legend
-              class="css-ihdtdm"
-            >
-              <span
-                class="notranslate"
-              >
-                ​
-              </span>
-            </legend>
-          </fieldset>
-        </div>
+        <input
+          class="css-13syu10 e1qlpjed0"
+          placeholder="Search any track"
+          value=""
+        />
         <button
-          class="MuiButtonBase-root MuiButton-root MuiButton-secondary MuiButton-secondaryPrimary MuiButton-sizeMedium MuiButton-secondarySizeMedium MuiButton-root MuiButton-secondary MuiButton-secondaryPrimary MuiButton-sizeMedium MuiButton-secondarySizeMedium css-10yof0b-MuiButtonBase-root-MuiButton-root"
+          class="MuiButtonBase-root MuiButton-root MuiButton-secondary MuiButton-secondaryPrimary MuiButton-sizeMedium MuiButton-secondarySizeMedium MuiButton-root MuiButton-secondary MuiButton-secondaryPrimary MuiButton-sizeMedium MuiButton-secondarySizeMedium e1qlpjed1 css-l7z0xr-MuiButtonBase-root-MuiButton-root"
           tabindex="0"
           type="submit"
         >

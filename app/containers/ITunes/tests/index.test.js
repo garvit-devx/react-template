@@ -10,6 +10,15 @@ import { fireEvent } from '@testing-library/dom';
 import { renderProvider } from '@utils/testUtils';
 import { ITunesTest as ITunes } from '@app/containers/ITunes/index';
 
+const trackResults = {
+  results: {
+    12345: {
+      trackId: 12345,
+      trackName: 'Ignite'
+    }
+  }
+};
+
 describe('<ITunes /> container tests', () => {
   let submitSpy;
 
@@ -18,14 +27,16 @@ describe('<ITunes /> container tests', () => {
   });
 
   it('should render and match the snapshot', () => {
-    const { baseElement } = renderProvider(<ITunes />);
+    const { baseElement } = renderProvider(<ITunes tracks={trackResults} />);
     expect(baseElement).toMatchSnapshot();
   });
 
   it('should call dispatchGetTracks when search form is submitted', () => {
     const SEARCH_TERM = 'ignite';
 
-    const { getByPlaceholderText, getByRole } = renderProvider(<ITunes dispatchGetTracks={submitSpy} />);
+    const { getByPlaceholderText, getByRole } = renderProvider(
+      <ITunes dispatchGetTracks={submitSpy} tracks={trackResults} />
+    );
     const searchInput = getByPlaceholderText('Search any track');
     const searchForm = getByRole('form');
 
@@ -35,6 +46,18 @@ describe('<ITunes /> container tests', () => {
 
     fireEvent.submit(searchForm);
     expect(submitSpy).toBeCalledWith(SEARCH_TERM);
+  });
+
+  it('should display loading text if something is searched but results are not yet available', async () => {
+    const SEARCH_TERM = 'ignite';
+    const results = {};
+
+    const { findByText } = renderProvider(
+      <ITunes dispatchGetTracks={submitSpy} tracks={{ results }} searchTerm={SEARCH_TERM} />
+    );
+    const loadingText = await findByText('Loading...');
+
+    expect(loadingText).toBeInTheDocument();
   });
 
   it('should display correct number of results', () => {

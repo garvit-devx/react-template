@@ -45,7 +45,7 @@ function Header(props) {
         <source type="image/jpeg" srcSet={logo} />
         <Logo alt="logo" src={logo} width="auto" height="5rem" />
       </picture>
-      <Title type="heading" id="wednesday_solutions" />
+      <Title type="heading" id="itunes_search_app" />
     </StyledHeader>
   );
 }
