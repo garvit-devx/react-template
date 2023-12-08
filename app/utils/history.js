@@ -1,11 +1,12 @@
 import { createBrowserHistory } from 'history';
 import routeConstants from '@utils/routeConstants';
+import { isUAT } from '@utils/index';
 
 const routes = Object.keys(routeConstants);
 const pathname = window.location.pathname;
 let baseUrl = '';
 
-if (process.env.ENVIRONMENT_NAME === 'uat') {
+if (isUAT()) {
   routes.forEach((routeKey) => {
     const route = routeConstants[routeKey].route;
     if (pathname.includes(route)) {
@@ -18,6 +19,5 @@ if (process.env.ENVIRONMENT_NAME === 'uat') {
     }
   });
 }
-
 const history = createBrowserHistory({ basename: baseUrl });
 export default history;
