@@ -1,23 +1,29 @@
 import { createBrowserHistory } from 'history';
 import routeConstants from '@utils/routeConstants';
-import { isUAT } from '@utils/index';
+import { isUAT } from './index';
 
-const routes = Object.keys(routeConstants);
 const pathname = window.location.pathname;
-let baseUrl = '';
 
-if (isUAT()) {
-  routes.forEach((routeKey) => {
-    const route = routeConstants[routeKey].route;
-    if (pathname.includes(route)) {
-      if (pathname.substring(pathname.length - route.length, pathname.length) === route) {
-        baseUrl = pathname.substring(0, pathname.length - route.length);
+export function getBaseUrl(pathName, routeConstants) {
+  let baseUrl = '';
+  const routes = Object.keys(routeConstants);
+
+  if (isUAT()) {
+    routes.forEach((routeKey) => {
+      const route = routeConstants[routeKey].route;
+      if (pathName.includes(route)) {
+        if (pathName.substring(pathName.length - route.length, pathName.length) === route) {
+          baseUrl = pathName.substring(0, pathName.length - route.length);
+        }
+        if (pathName.substring(pathName.length - route.length, pathName.length - 1) === `${route}/`) {
+          baseUrl = pathName.substring(0, pathName.length - route.length - 1);
+        }
       }
-      if (pathname.substring(pathname.length - route.length, pathname.length - 1) === `${route}/`) {
-        baseUrl = pathname.substring(0, pathname.length - route.length - 1);
-      }
-    }
-  });
+    });
+  }
+
+  return baseUrl;
 }
-const history = createBrowserHistory({ basename: baseUrl });
+
+const history = createBrowserHistory({ basename: getBaseUrl(pathname, routeConstants) });
 export default history;
