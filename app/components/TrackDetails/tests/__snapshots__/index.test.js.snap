@@ -12,14 +12,15 @@ exports[`<TrackDetails /> should render and match the snapshot 1`] = `
       >
         <img
           alt="Perfect"
-          class="css-1bfxc3 eh9f6zb0"
+          class="css-efil23 eh9f6zb0"
           src="Some URL"
         />
       </div>
       <div>
         <p
-          class="css-lh9t18 egtqi0h0"
+          class="css-voxnpk egtqi0h0"
           data-testid="t"
+          style="margin-bottom: 1rem;"
         >
           Track Name: Perfect
         </p>
@@ -36,7 +37,7 @@ exports[`<TrackDetails /> should render and match the snapshot 1`] = `
           Track duration: 2057.61 minutes
         </p>
         <button
-          class="MuiButtonBase-root MuiButton-root MuiButton-secondary MuiButton-secondaryPrimary MuiButton-sizeMedium MuiButton-secondarySizeMedium MuiButton-root MuiButton-secondary MuiButton-secondaryPrimary MuiButton-sizeMedium MuiButton-secondarySizeMedium css-3uxdid-MuiButtonBase-root-MuiButton-root"
+          class="MuiButtonBase-root MuiButton-root MuiButton-secondary MuiButton-secondaryPrimary MuiButton-sizeMedium MuiButton-secondarySizeMedium MuiButton-root MuiButton-secondary MuiButton-secondaryPrimary MuiButton-sizeMedium MuiButton-secondarySizeMedium css-omr7tb-MuiButtonBase-root-MuiButton-root"
           tabindex="0"
           type="button"
         >

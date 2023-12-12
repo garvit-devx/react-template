@@ -14,6 +14,9 @@ export const selectITunesProviderDomain = (state) => state.iTunes || initialStat
 
 export const selectITunes = () => createSelector(selectITunesProviderDomain, (substate) => substate);
 
+export const selectSearchTerm = () =>
+  createSelector(selectITunesProviderDomain, (substate) => get(substate, 'searchTerm'));
+
 export const selectTracks = () => createSelector(selectITunesProviderDomain, (substate) => get(substate, 'tracks'));
 
 export const selectError = () => createSelector(selectITunesProviderDomain, (substate) => get(substate, 'error'));

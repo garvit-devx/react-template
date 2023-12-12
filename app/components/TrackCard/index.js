@@ -7,7 +7,7 @@ import styled from '@emotion/styled';
 import T from '@components/T/index';
 
 const CustomCard = styled(Card)`
-  padding: 0.5rem;
+  padding: 12px;
   margin: 1rem auto;
   width: 100%;
 `;
