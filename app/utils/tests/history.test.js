@@ -1,62 +1,35 @@
-import { getBaseName } from '../history';
+import { createBrowserHistory } from 'history';
+import { getBaseUrl } from '@app/utils/history';
 
-jest.mock('../routeConstants', () => ({
-  home: {
-    route: '/'
-  },
-  repos: {
-    route: '/repos'
-  },
-  tracks: {
-    route: '/tracks'
-  },
-  track: {
-    route: '/tracks/:trackId'
-  },
-  artist: {
-    route: '/artists/:artistId'
-  },
-  artistTrack: {
-    route: '/artists/:artistId/tracks/:trackId'
-  }
-}));
+jest.mock('history');
 
 describe('history tests', () => {
-  const OLD_ENV = process.env;
-  const oldLocation = window.location;
-
   beforeEach(() => {
-    jest.resetModules();
-    delete window.location;
-    window.location = {
-      pathname: '/'
-    };
-    process.env = { ...OLD_ENV };
-    process.env.ENVIRONMENT_NAME = 'development';
     process.env.NODE_ENV = 'production';
   });
 
-  afterAll(() => {
-    process.env = OLD_ENV;
-    window.location = oldLocation;
+  it('calls createBrowserHistory with basename as empty string if isUAT returns false', () => {
+    process.env.ENVIRONMENT_NAME = 'production'; // isUAT returns false
+
+    expect(createBrowserHistory).toHaveBeenCalledWith({
+      basename: ''
+    });
   });
 
-  it("should return getBaseName '/' if process.env.NODE_ENV is development", () => {
-    process.env.NODE_ENV = 'development';
-    window.location.pathname = '/tracks/321';
-    expect(getBaseName()).toBe('');
-  });
+  it('calls createBrowserHistory with basename as empty string if isUAT returns true and pathname includes route', () => {
+    process.env.ENVIRONMENT_NAME = 'development'; // isUAT returns true
 
-  it('should return baseURL BRANCH_NAME in UAT environment', () => {
-    process.env.BRANCH_NAME = 'feat/test-pr';
-    window.location.pathname = '/feat/test-pr/tracks/123';
-    expect(getBaseName()).toBe('/' + process.env.BRANCH_NAME);
-    process.env.BRANCH_NAME = undefined;
-  });
+    const pathname = '/itunes/123';
+    const routeConstants = {
+      itunes: {
+        route: '/'
+      }
+    };
 
-  it('should return baseUrl / if NODE_ENV and ENVIRONMENT_NAME is production', () => {
-    process.env.ENVIRONMENT_NAME = 'production';
-    window.location.pathname = '/test-relative-path';
-    expect(getBaseName()).toBe('');
+    const baseUrl = getBaseUrl(pathname, routeConstants);
+    expect(baseUrl).toEqual('');
+    expect(createBrowserHistory).toHaveBeenCalledWith({
+      basename: baseUrl
+    });
   });
 });
