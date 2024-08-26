@@ -30,7 +30,7 @@ jobs:
           docker run --name zap -u root -v $(pwd):/zap/wrk/:rw -t ghcr.io/zaproxy/zaproxy:stable zap-baseline.py -t ${{ secrets.DEPLOY_URL }} -I -r testReport.html
 
       - name: Copy contents of testReport.html from container to scanReport.html in the repo
-        run: docker cp zap:./zap/wrk/testReport.html ./zap/scanReport.html
+        run: docker cp zap:./zap/wrk/testReport.html zap/scanReport.html
 
       - name: View Copied Test Report
         run: cat ./zap/testReport.html
