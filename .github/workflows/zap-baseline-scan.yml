@@ -32,8 +32,21 @@ jobs:
       - name: Copy contents of testReport.html from container to scanReport.html in the repo
         run: docker cp zap:./zap/wrk/testReport.html zap/scanReport.html
 
-      - name: View Copied Test Report
-        run: cat ./zap/testReport.html
+      - name: Configure Git
+        run: |
+          git config --global user.name "GitHub Actions"
+          git config --global user.email "actions@github.com"
+
+      - name: Commit scan report to repository
+        run: |
+          git add ./zap/scanReport.html
+          git commit -m "Add ZAP scan report"
+
+      - name: Push changes
+        uses: ad-m/github-push-action@v0.6.0
+        with:
+          github_token: ${{ secrets.PERSONAL_ACCESS_TOKEN}}
+          branch: ${{ github.ref }}
 
       - name: Clean up ZAP container
         run: docker stop zap && docker rm zap
