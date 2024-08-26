@@ -1,0 +1,39 @@
+name: ZAP Full Scan
+
+on:
+  pull_request:
+    branches:
+      - develop
+  push:
+    branches:
+      - feat/zap-integration
+
+jobs:
+  zap-scan:
+    name: OWASP ZAP Baseline Scan
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [20.x]
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: Run baseline scan on the deployed URL
+        run: |
+          docker run --name zap -u root -v $(pwd):/zap/wrk/:rw -t ghcr.io/zaproxy/zaproxy:stable zap-baseline.py -t ${{ secrets.DEPLOY_URL }} -I -r testReport.html
+
+      # - name: Copy contents of testReport.html from container to scanReport.html in the repo
+      #   run: docker cp zap:./zap/wrk/testReport.html ./zap/scanReport.html
+
+      - name: View Test Report
+        run: cat testReport.html
+
+      - name: Clean up ZAP container
+        run: docker stop zap && docker rm zap
