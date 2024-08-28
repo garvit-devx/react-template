@@ -2,9 +2,11 @@ name: ZAP full scan
 
 on:
   pull_request:
-    - develop
+    branches:
+      - develop
   push:
-    - feat/integrate-zap-full-scan
+    branches:
+      - feat/integrate-zap-full-scan
 
 jobs:
   zap-scan:
