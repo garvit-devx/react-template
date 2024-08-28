@@ -1,0 +1,38 @@
+name: ZAP full scan
+
+on:
+  pull_request:
+    - develop
+  push:
+    - feat/integrate-zap-full-scan
+
+jobs:
+  zap-scan:
+    name: ZAP full-scan
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [20.x]
+
+    steps:
+      - name: Setup checkout
+        uses: actions/checkout@v3
+
+      - name: Setup Node v20
+        uses: actions/setup-node@v3
+        with:
+          - node-version: ${{ matrix.node-version }}
+
+      - name: Run ZAP full scan
+        run: |
+          docker run -u root --name zap -v $(pwd):/zap/wrk/:rw -t ghcr.io/zaproxy/zaproxy:stable zap-full-scan.py \
+          -t ${{secrets.DEPLOY_URL}} -I -m 10 -r testReport.html
+
+      - name: Copy report contents from container file
+        run: docker cp zap:/zap/wrk/testReport.html zap/fullScanReport.html
+
+      - name: Print contents of fullScanReport.html
+        run: cat ./zap/fullScanReport.html
+
+      - name: Clean up ZAP container
+        run: docker stop zap && docker rm zap
